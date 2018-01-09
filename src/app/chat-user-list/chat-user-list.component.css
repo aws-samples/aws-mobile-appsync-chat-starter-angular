@@ -1,0 +1,6 @@
+.user-list {
+    height: auto;
+    max-height: 30vh !important;
+    overflow-x: hidden !important;
+    overflow-y: auto;
+  }

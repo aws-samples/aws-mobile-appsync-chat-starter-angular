@@ -1,0 +1,20 @@
+<div class="card w-75 mb-2 chat-message"
+[class.float-right]="fromMe"
+[class.border-primary]="fromMe"
+[class.border-success]="!fromMe">
+<div class="card-body p-2 border rounded">
+  <div class='clearfix'>
+    <h6 class="card-title mb-1 float-left"
+    [class.text-primary]="fromMe"
+    [class.text-success]="!fromMe">
+    {{username}}
+  </h6>
+  <div class='float-right'>
+    <small class="card-subtitle mb-0 text-muted">{{message.createdAt | momentAgo }}</small>
+    &nbsp;
+    <i class="ion-checkmark" [class.text-muted]="!message.isSent" [class.text-info]="message.isSent" data-pack="default" data-tags="talk"></i>
+  </div>
+</div>
+  <p class="card-text mb-0">{{message.content}}</p>
+</div>
+</div>

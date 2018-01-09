@@ -1,0 +1,17 @@
+<nav class="navbar navbar-toggleable-md navbar-inverse navbar-dark bg-dark fixed-top">
+  <a class="navbar-brand text-white">
+    <img src="../../assets/img/chat.png" width="30" height="30" class="d-inline-block align-top" alt="http://freepngimg.com/png/11489-chat-free-download-png">
+    <strong>ChatQL</strong>
+  </a>
+  <ul class="nav navbar-nav">
+    <li *ngIf="isLoggedIn; else signinBlock" class="nav-item">
+      <button type="button" class="btn btn-primary" (click)="auth.signout()">Sign Out <i class="ion-log-out" data-pack="default" data-tags="sign out"></i></button>
+    </li>
+
+    <ng-template #signinBlock>
+      <li class="nav-item">
+        <button type="button" class="btn btn-primary" (click)="auth.signin()">Connect <i class="ion-log-in" data-pack="default" data-tags="sign in"></i></button>
+      </li>
+    </ng-template>
+  </ul>
+</nav>

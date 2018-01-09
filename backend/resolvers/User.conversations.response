@@ -1,0 +1,4 @@
+{
+    "userConversations": $utils.toJson($context.result.items),
+    "nextToken": #if(${context.result.nextToken}) "${context.result.nextToken}" #else null #end
+}

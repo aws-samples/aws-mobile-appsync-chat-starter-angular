@@ -1,0 +1,13 @@
+<div class="rounded p-2 mt-2 bg-light border border-dark rounded">
+  <div class="input-group">
+    <input type="text" class="form-control no-focus"
+    required placeholder="Type a Message"
+    id="message" [(ngModel)]="message" name="message"
+    (keyup.enter)="createNewMessage()" />
+    <span class="input-group-btn">
+      <button class="btn btn-dark" (click)="createNewMessage()" type="button">
+        Send&nbsp;<i class='ion-chatbubble-working'></i>
+      </button>
+    </span>
+  </div>
+</div>

@@ -1,0 +1,15 @@
+{
+    "version" : "2017-02-28",
+    "operation" : "PutItem",
+    "key" : {
+        "conversationId" : { "S" : "${context.arguments.conversationId}" }
+    },
+    "attributeValues" : {
+        "conversationId": {  "S": "${context.arguments.conversationId}" },
+		"content": {  "S": "${context.arguments.content}" },
+        "createdAt": {  "S": "${context.arguments.createdAt}" },
+        "sender": {  "S": "${context.identity.sub}" },
+        "isSent": {  "BOOL": true },
+		"id": { "S": "${context.arguments.id}" }
+    }
+}

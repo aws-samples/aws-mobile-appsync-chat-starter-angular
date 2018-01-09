@@ -1,0 +1,14 @@
+{
+    "version" : "2017-02-28",
+    "operation" : "Query",
+    "query" : {
+        "expression": "conversationId = :id",
+        "expressionValues" : {
+            ":id" : {
+                "S" : "${context.arguments.conversationId}"
+            }
+        }
+    },
+    "limit": #if(${context.arguments.first}) ${context.arguments.first} #else 20 #end,
+    "nextToken": #if(${context.arguments.after}) "${context.arguments.after}" #else null #end
+}

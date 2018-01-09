@@ -1,0 +1,15 @@
+---!com.amazonaws.mobilehub.v0.Project 
+features:
+  content-delivery: !com.amazonaws.mobilehub.v0.ContentDelivery 
+    attributes:
+      enabled: true
+      visibility: public-global
+    components:
+      release: !com.amazonaws.mobilehub.v0.Bucket {}
+  mobile-analytics: !com.amazonaws.mobilehub.v0.Pinpoint 
+    components:
+      analytics: !com.amazonaws.mobilehub.v0.PinpointAnalytics {}
+name: ChatQL
+region: us-east-1
+uploads: []
+sharedComponents: {}

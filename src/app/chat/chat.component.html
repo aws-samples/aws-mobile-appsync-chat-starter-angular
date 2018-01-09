@@ -1,0 +1,39 @@
+<div class="container-fluid mb-60px pb-2 align-middle">
+  <div *ngIf="update;">
+    <p> 
+      <ngb-alert type="primary" [dismissible]="false">
+        <span>New version available
+          <button class="btn btn-primary float-right" (click)="activateUpdate()">Update</button>
+          <br>
+        </span>
+      </ngb-alert>
+    </p>
+  </div>
+
+  <div class="row">
+    <div class="col-sm-4 p-1">
+
+      <div class="border bg-light border-dark rounded rounded p-2 h-100">
+        <div class="left-pane">
+
+          <app-chat-user-list [user]="me" (onNewConvo)="setNewConvo($event)" pageScroll href="#chat"></app-chat-user-list>
+          <app-chat-convo-list [current]="conversation" (onConvoClick)="setNewConvo($event)" pageScroll href="#chat"></app-chat-convo-list>
+
+        </div>
+      </div>
+    </div>
+
+    <div class="col-sm-8 p-1" id="chat">
+      <div *ngIf="conversation; else instructions">
+        <app-chat-message-view #messageView [senderId]="me.cognitoId" [conversation]="conversation"></app-chat-message-view>
+        <app-chat-input [conversation]="conversation" [senderId]="me.cognitoId"></app-chat-input>
+      </div>
+    </div>
+  </div>
+</div>
+
+<ng-template #instructions>
+  <div class= "bg-light rounded p-2 border border-dark rounded text-center instructions">
+    <p class= "p-5 m-5 h5 rounded-circle bg-dark text-white instructions-text">Welcome, <strong>{{username}}</strong>! Select a User or a Conversation to start or continue a ChatQL</p>
+  </div>
+</ng-template>

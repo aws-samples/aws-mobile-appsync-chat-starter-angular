@@ -1,0 +1,16 @@
+<div class="d-block font-weight-bold bg-dark text-white text-right rounded p-2">
+  <h6 class='mb-0'><i class="ion-person-stalker" data-pack="default" data-tags="talk"></i> Convos</h6>
+</div>
+<div class="convo-list">
+  <div class="list-group mb-2">
+    <a href *ngFor="let convo of conversations | orderBy: order"
+    class="list-group-item list-group-item-action p-2 border-0 bg-light"
+    [class.active]="current && convo.id === current.id"
+    (click)="click(convo, $event); false">
+    {{convo.name}}</a>
+  </div>
+</div>
+<!-- <button
+*ngIf="conversationNextToken"
+type="button" class="btn btn-secondary"
+(click)="false">See more convos</button> -->

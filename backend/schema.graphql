@@ -1,0 +1,87 @@
+﻿type Conversation {
+  #  The Conversation's timestamp.
+  createdAt: String
+  #  A unique identifier for the Conversation.
+  id: ID!
+  #  The Conversation's messages.
+  messages(after: String, first: Int): MessageConnection
+  #  The Conversation's name.
+  name: String!
+}
+
+type Message {
+  #  The author object. Note: `authorId` is only available because we list it in `extraAttributes` in `Conversation.messages`
+  author: User
+  #  The message content.
+  content: String!
+  #  The id of the Conversation this message belongs to. This is the table primary key.
+  conversationId: ID!
+  #  The message timestamp. This is also the table sort key.
+  createdAt: String
+  #  Generated id for a message -- read-only
+  id: ID!
+  #  Flag denoting if this message has been accepted by the server or not.
+  isSent: Boolean
+  recipient: User
+  sender: String
+}
+
+type MessageConnection {
+  messages: [Message]
+  nextToken: String
+}
+
+type Mutation {
+  #  Create a Conversation. Use some of the cooked in template functions for UUID and DateTime.
+  createConversation(createdAt: String, id: ID!, name: String!): Conversation
+  #  Create a message in a Conversation.
+  createMessage(content: String, conversationId: ID!, createdAt: String!, id: ID!): Message
+  #  Put a single value of type 'User'. If an item does not exist with the same key the item will be created. If there exists an item at that key already, it will be updated.
+  createUser(username: String!): User
+  #  Put a single value of type 'UserConversations'. If an item does not exist with the same key the item will be created. If there exists an item at that key already, it will be updated.
+  createUserConversations(conversationId: ID!, userId: ID!): UserConversations
+}
+
+type Query {
+  #  Scan through all values of type 'Message'. Use the 'after' and 'before' arguments with the 'nextToken' returned by the 'MessageConnection' result to fetch pages.
+  allMessage(after: String, conversationId: ID!, first: Int): [Message]
+  #  Scan through all values of type 'MessageConnection'. Use the 'after' and 'before' arguments with the 'nextToken' returned by the 'MessageConnectionConnection' result to fetch pages.
+  allMessageConnection(after: String, conversationId: ID!, first: Int): MessageConnection
+  allMessageFrom(after: String, conversationId: ID!, first: Int, sender: String!): [Message]
+  #  Scan through all values of type 'User'. Use the 'after' and 'before' arguments with the 'nextToken' returned by the 'UserConnection' result to fetch pages.
+  allUser(after: String, first: Int): [User]
+  #  Get my user.
+  me(random: String): User
+}
+
+type Subscription {
+  #  Subscribes to all new messages in a given Conversation.
+  subscribeToNewMessage(conversationId: ID!): Message
+    @aws_subscribe(mutations:["createMessage"])
+}
+
+type User {
+  #  A unique identifier for the user.
+  cognitoId: ID!
+  #  A user's enrolled Conversations. This is an interesting case. This is an interesting pagination case.
+  conversations(after: String, first: Int): UserConverstationsConnection
+  #  Generated id for a user. read-only
+  id: ID!
+  #  Get a users messages by querying a GSI on the Messages table.
+  messages(after: String, first: Int): MessageConnection
+  #  The username
+  username: String!
+}
+
+type UserConversations {
+  associated: [UserConversations]
+  conversation: Conversation
+  conversationId: ID!
+  user: User
+  userId: ID!
+}
+
+type UserConverstationsConnection {
+  nextToken: String
+  userConversations: [UserConversations]
+}

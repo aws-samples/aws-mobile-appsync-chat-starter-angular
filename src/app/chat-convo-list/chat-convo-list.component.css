@@ -1,0 +1,14 @@
+.list-group-item.active {
+  z-index: 2;
+  color: #fff;
+  background-color: #007bff;
+  border-color: #007bff;
+  background-color: #dae0e5 !important;
+}
+
+.convo-list {
+  height: auto;
+  max-height: 30vh !important;
+  overflow-x: hidden !important;
+  overflow-y: auto;
+}

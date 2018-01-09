@@ -1,0 +1,15 @@
+{
+    "version" : "2017-02-28",
+    "operation" : "Query",
+    "query" : {
+        "expression": "userId = :userId",
+        "expressionValues" : {
+            ":userId" : {
+                "S" : "${context.source.cognitoId}"
+            }
+        }
+    },
+    "scanIndexForward": false,
+    "limit": #if(${context.arguments.first}) ${context.arguments.first} #else 20 #end,
+    "nextToken": #if(${context.arguments.after}) "${context.arguments.after}" #else null #end
+}

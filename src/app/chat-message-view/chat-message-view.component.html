@@ -1,0 +1,17 @@
+<div class="bg-light rounded p-2 border border-dark rounded">
+  <div class="p-0">
+    <span class="d-block font-weight-bold bg-dark text-white text-right rounded p-2 mb-2">
+      <i class="ion-chatbubbles" data-pack="default" data-tags="talk"></i> {{conversation?.name}}
+    </span>
+    <div #scrollMe class="chat" [appInfscroll]="loadMoreMessages" [completedFetching]="completedFetching">
+      <app-chat-message *ngFor="let message of messages; last as isLast; first as isFirst"
+      [message]="message"
+      [username]="username(message)"
+      [fromMe]="fromMe(message)"
+      [isLast]="isLast"
+      [isFirst]="isFirst"
+      (added)="messageAdded(isFirst, $event)"
+      ></app-chat-message>
+    </div>
+  </div>
+</div>

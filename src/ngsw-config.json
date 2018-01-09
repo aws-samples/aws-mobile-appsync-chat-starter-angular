@@ -1,0 +1,44 @@
+{
+  "index": "/index.html",
+  "assetGroups": [{
+    "name": "app",
+    "installMode": "prefetch",
+    "resources": {
+      "files": [
+        "/favicon.ico",
+        "/index.html"
+      ],
+      "versionedFiles": [
+        "/*.bundle.css",
+        "/*.bundle.js",
+        "/*.chunk.js"
+      ]
+    }
+  }, {
+    "name": "assets",
+    "installMode": "lazy",
+    "updateMode": "prefetch",
+    "resources": {
+      "files": [
+        "/assets/**"
+      ],
+      "urls": [
+        "https://fonts.googleapis.com/**",
+        "https://fonts.gstatic.com/**",
+        "https://code.ionicframework.com/**"
+      ]
+    }
+  }],
+  "dataGroups": [
+    {
+      "name": "appsync",
+      "urls": ["/chat"],
+      "cacheConfig": {
+        "strategy": "freshness",
+        "maxSize": 50,
+        "maxAge": "30m",
+        "timeout": "5s"
+      }
+    }
+  ]
+}

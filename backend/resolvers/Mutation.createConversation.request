@@ -1,0 +1,13 @@
+{
+    "version" : "2017-02-28",
+    "operation" : "PutItem",
+    "key": {
+        "id": { "S" : "${context.arguments.id}"}
+    },
+    "attributeValues" : {
+       "id": {  "S": "${context.arguments.id}" },
+       "name": {  "S": "${context.arguments.name}" }
+       #if(${context.arguments.createdAt}) ,"createdAt": { "S": "${context.arguments.createdAt}"} #end
+
+    }
+}

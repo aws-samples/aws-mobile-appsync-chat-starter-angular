@@ -1,0 +1,16 @@
+{
+    "version" : "2017-02-28",
+    "operation" : "Query",
+    "query" : {
+        "expression": "sender = :id",
+        "expressionValues" : {
+            ":id" : {
+                "S" : "${context.source.cognitoId}"
+            }
+        }
+    },
+    "index": "sender-conversationId-index",
+    "scanIndexForward": false,
+    "limit": #if(${context.arguments.first}) ${context.arguments.first} #else 20 #end,
+    "nextToken": #if(${context.arguments.after}) "${context.arguments.after}" #else null #end
+}
