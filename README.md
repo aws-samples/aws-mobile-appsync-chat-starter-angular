@@ -1,7 +1,7 @@
 Introduction
 ============
 
-This is a Starter Angular progressive web application (PWA) for using the Sample app in the AWS AppSync console when building your GraphQL API. The Sample app creates a GraphQL schema and provisions Amazon DynamoDB resources, then connects them appropriately with Resolvers. The application demonstrates GraphQL Mutations, Queries and Subscriptions using AWS AppSync. You can use this for learning purposes or adapt either the application or the GraphQL Schema to meet your needs.
+This is a Starter Angular progressive web application (PWA) that takes advantage of AWS AppSync offline and real-time capabilities in a chat application. A script creates a GraphQL Schema, a related API, an Amazon Cognito User Pool for AuthN/Z as well as provisions Amazon DynamoDB resources, then connects them appropriately with Resolvers. The application demonstrates GraphQL Mutations, Queries and Subscriptions using AWS AppSync. You can use this for learning purposes or adapt either the application or the GraphQL Schema to meet your needs.
 
 <p align="center">
   <img src="screenshots/chatql.png">
