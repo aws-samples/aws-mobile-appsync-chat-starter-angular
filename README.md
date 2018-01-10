@@ -121,7 +121,7 @@ This step is necessary because of the way Angular internal routing works. An aut
 
 9. Access your public ChatQL application using the CloudFront URL, share the link and start sending messages and creating conversations with other users.
 
-10. The aws-exports.js file created by the awsmobile CLI provided the Amazon Pinpoint project details to start collection Analytics from the chat activity. AWS Amplify is configured to send custom events to Pinpoint when a message is sent and when a conversation is created (/src/app/chat-input/chat-input.component.ts and /src/app/chat-user-list/chat-user-list.component.ts)
+10. The aws-exports.js file created by the awsmobile CLI provided the Amazon Pinpoint project details to start collecting analytics data from the chat activity in the application. AWS Amplify is configured to send custom events to Pinpoint when a message is sent and when a conversation is created (/src/app/chat-input/chat-input.component.ts and /src/app/chat-user-list/chat-user-list.component.ts)
 
-11. After a couple of minutes go to the Amazon Pinpoint console, select the project, go to ANALYTICS -> EVENTS and select the specific event from the EVENT dropdown menu to see the data about the related event.
+11. After a couple of minutes go to the Amazon Pinpoint console, select the project, go to ANALYTICS -> EVENTS and select the specific event ("Chat MSG Sent" or "New Conversation" Events) from the EVENT dropdown menu to see the data about the related custom event.
 
