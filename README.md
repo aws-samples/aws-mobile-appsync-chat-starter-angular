@@ -17,7 +17,7 @@ This is a Starter Angular progressive web application (PWA) for using the Sample
 
 ## Features
 
-- PWA: A progressive web application takes advantage of the latest technologies to combine the best of web and mobile apps. Think of it as a website built using web technologies but that acts and feels like an app in a mobile device. 
+- PWA: A progressive web application takes advantage of the latest technologies such as Service Workers to combine the best of web and mobile apps. Think of it as a website built using web technologies but that acts and feels like an app in a mobile device. 
 
 - GraphQL Mutations (src/app/graphql/mutations)
   - Create messages
