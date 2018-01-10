@@ -17,6 +17,8 @@ This is a Starter Angular progressive web application (PWA) for using the Sample
 
 ## Features
 
+- PWA: A progressive web application takes advantage of the latest technologies to combine the best of web and mobile apps. Think of it as a website built using web technologies but that acts and feels like an app in a mobile device. 
+
 - GraphQL Mutations (src/app/graphql/mutations)
   - Create messages
   - Create conversations and link them to the user
@@ -105,7 +107,7 @@ SIGN OUT URL: https://d123456EXAMPLE.cloudfront.net
 
 6. Execute "awsmobile publish" (If there are any errors, copy the file backend/mobile-hub-project.yml to the folder awsmobilejs/backend/)
 
-7. While the application is building, go back to the Mobile Hub console and select HOSTING & STREAMING -> EDIT YOUR CDN DISTRIBUTION -> ERROR PAGES -> CREATE CUSTOM ERROR RESPONSe. Use the following settings:
+7. While the application is building, go back to the Mobile Hub console and select HOSTING & STREAMING -> EDIT YOUR CDN DISTRIBUTION -> ERROR PAGES -> CREATE CUSTOM ERROR RESPONSE. Use the following settings:
 
 * HTTP Error Code: 403
 * Minimun TTL: 0
