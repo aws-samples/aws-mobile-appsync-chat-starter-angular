@@ -42,7 +42,7 @@ export class ChatUserListComponent implements OnInit {
     this.users = this.users.filter(u => u.username !== this._user.username);
     if (this.users.length == 0){
       this.no_user=true;
-    }
+    } else this.no_user=false;
   }
 
   getAllUsers() {
