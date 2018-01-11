@@ -40,9 +40,6 @@ export class ChatUserListComponent implements OnInit {
 
   filterUsers() {
     this.users = this.users.filter(u => u.username !== this._user.username);
-    if (this.users.length == 0){
-      this.no_user=true;
-    } else this.no_user=false;
   }
 
   getAllUsers() {
@@ -55,6 +52,10 @@ export class ChatUserListComponent implements OnInit {
         if (!data) { 
           return console.log('getAllUsers - no data'); }
         this.users = _.sortBy(data.allUser, 'username');
+        console.log(this.users)
+        if (this.users.length <= 1){
+          this.no_user=true;
+        } else this.no_user=false;
         if (this._user) { this.filterUsers(); }
       });
     });
