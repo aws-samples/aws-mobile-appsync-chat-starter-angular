@@ -1,4 +1,10 @@
-﻿type Conversation {
+type schema {
+  query: Query
+  mutation: Mutation
+  subscription: Subscription
+}
+
+type Conversation {
   #   The Conversation's timestamp.
   createdAt: String
   #   A unique identifier for the Conversation.
