@@ -35,7 +35,7 @@ type Mutation {
   #   Create a Conversation. Use some of the cooked in template functions for UUID and DateTime.
   createConversation(createdAt: String, id: ID!, name: String!): Conversation
   #   Create a message in a Conversation.
-  createMessage(content: String, conversationId: ID!, createdAt: String!, id: ID!): Message
+  createMessage(content: String, conversationId: ID!, createdAt: String!, id: ID!, sender: String!): Message
   #   Put a single value of type 'User'. If an item does not exist with the same key the item will be created. If there exists an item at that key already, it will be updated.
   createUser(id: String!, username: String!): User
   #   Put a single value of type 'UserConversations'. If an item does not exist with the same key the item will be created. If there exists an item at that key already, it will be updated.
