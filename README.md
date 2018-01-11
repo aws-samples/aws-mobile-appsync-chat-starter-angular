@@ -61,7 +61,7 @@ Setup
 * Build Command: ```ng build --prod```
 * Local Test Run Comman: ```<Press ENTER to accept defaults>```
 
-This will copy the ```aws-exports.js``` file to the ```/src``` folder and configure the resources accordingly.
+This will download a ```aws-exports.js``` file to the ```/src``` folder and configure the resources accordingly.
 
 4. Execute the shell script ```setup.sh``` from the folder ```/backend```. The script will create an IAM Service Role, AppSync API, Data Sources (DynamoDB Tables), Resolvers and a GraphQL Schema 
 
