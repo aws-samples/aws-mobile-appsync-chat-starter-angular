@@ -19,17 +19,17 @@ This is a Starter Angular progressive web application (PWA) that takes advantage
 
 - PWA: A progressive web application takes advantage of the latest technologies such as Service Workers to combine the best of web and mobile apps. Think of it as a website built using web technologies but that acts and feels like an app in a mobile device. 
 
-- GraphQL Mutations (src/app/graphql/mutations)
+- GraphQL Mutations (```src/app/graphql/mutations```)
   - Create messages
   - Create conversations and link them to the user
   - Create users
 
-- GraphQL Queries (src/app/graphql/queries)
+- GraphQL Queries (```src/app/graphql/queries```)
   - Get all users
   - Get all messages in a conversation
   - Get all user related conversations by Id
 
-- GraphQL Subscriptions (src/app/graphql/subscriptions)
+- GraphQL Subscriptions (```src/app/graphql/subscriptions```)
   - Real time updates for new messages in conversations
 
 - Auth
