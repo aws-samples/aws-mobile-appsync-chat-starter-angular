@@ -24,6 +24,7 @@ export class ChatUserListComponent implements OnInit {
   _user;
   users: User[] = [];
   order = 'username';
+  no_user:boolean=false;
 
   @Input()
   set user(user) {
@@ -39,6 +40,9 @@ export class ChatUserListComponent implements OnInit {
 
   filterUsers() {
     this.users = this.users.filter(u => u.username !== this._user.username);
+    if (this.users.length == 0){
+      this.no_user=true;
+    }
   }
 
   getAllUsers() {
@@ -48,7 +52,8 @@ export class ChatUserListComponent implements OnInit {
         fetchPolicy: 'cache-and-network',
         ssr: false
       }).subscribe(({data}) => {
-        if (!data) { return console.log('getAllUsers - no data'); }
+        if (!data) { 
+          return console.log('getAllUsers - no data'); }
         this.users = _.sortBy(data.allUser, 'username');
         if (this._user) { this.filterUsers(); }
       });

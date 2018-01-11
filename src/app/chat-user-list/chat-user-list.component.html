@@ -3,6 +3,11 @@
 </div>
 <div class="user-list">
   <div class="list-group mb-2 ">
+    <div *ngIf="no_user;">
+        <ngb-alert type="success" [dismissible]="false">
+          <span>It looks lonely here... Sign up another user</span>
+        </ngb-alert>
+    </div>
     <a href='#' *ngFor="let user of users"
     class="list-group-item list-group-item-action p-2 border-0 bg-light"
     (click)="createNewConversation(user, $event); false">
