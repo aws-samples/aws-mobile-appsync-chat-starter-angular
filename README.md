@@ -9,7 +9,7 @@ This is a Starter Angular progressive web application (PWA) that takes advantage
 
 ## Pre-Reqs
 
-* Valid AWS Account
+* AWS Account with appropriate permissions
 * [AWS CLI](http://docs.aws.amazon.com/cli/latest/userguide/installing.html)
 * [NPM](https://www.npmjs.com/get-npm)
 * [AWS Mobile CLI](https://github.com/aws/awsmobile-cli) - ```npm install -g awsmobile-cli```
