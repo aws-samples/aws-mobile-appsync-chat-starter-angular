@@ -53,7 +53,7 @@ Setup
 
 3. Go to the project and click on ADD NEW APP then select WEB. Follow the instructions.
 
-4. Execute the ```awsmobile init xxxxxxxxxxxxxx``` command the root folder and provide the following details:
+4. Execute the ```awsmobile init xxxxxxxxxxxxxx``` command from the root folder and provide the following details:
 
 * Source Directory: ```src```
 * Distribution Directory: ```dist```
