@@ -11,6 +11,7 @@ This is a Starter Angular progressive web application (PWA) that takes advantage
 
 * AWS Account with appropriate permissions
 * [AWS CLI](http://docs.aws.amazon.com/cli/latest/userguide/installing.html)
+* Shell Script support (Linux/Mac/[Windows](https://docs.microsoft.com/en-us/windows/wsl/install-win10))
 * [NPM](https://www.npmjs.com/get-npm)
 * [AWS Mobile CLI](https://github.com/aws/awsmobile-cli) - ```npm install -g awsmobile-cli```
 * [Angular CLI](https://github.com/angular/angular-cli) - ```npm install -g angular-cli```
@@ -58,6 +59,7 @@ Setup
 * Source Directory: ```src```
 * Distribution Directory: ```dist```
 * Build Command: ```ng build --prod```
+* Local Test Run Comman: ```<Press ENTER to accept defaults>```
 
 This will copy the ```aws-exports.js``` file to the ```/src``` folder and configure the resources accordingly.
 
