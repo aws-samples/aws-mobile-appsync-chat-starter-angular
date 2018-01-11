@@ -9,7 +9,7 @@ This is a Starter Angular progressive web application (PWA) that takes advantage
 
 ## Pre-Reqs
 
-* Valid AWS Account
+* AWS Account with appropriate permissions
 * [AWS CLI](http://docs.aws.amazon.com/cli/latest/userguide/installing.html)
 * [NPM](https://www.npmjs.com/get-npm)
 * [AWS Mobile CLI](https://github.com/aws/awsmobile-cli) - ```npm install -g awsmobile-cli```
@@ -53,7 +53,7 @@ Setup
 
 3. Go to the project and click on ADD NEW APP then select WEB. Follow the instructions.
 
-4. Execute the ```awsmobile init xxxxxxxxxxxxxx``` command the root folder and provide the following details:
+4. Execute the ```awsmobile init xxxxxxxxxxxxxx``` command from the root folder and provide the following details:
 
 * Source Directory: ```src```
 * Distribution Directory: ```dist```
