@@ -3,7 +3,6 @@ import { AppsyncService } from '../appsync.service';
 import getConversationMessages from '../graphql/queries/getConversationMessages';
 import subscribeToNewMessages from '../graphql/subscriptions/subscribeToNewMessages';
 import { getConversationMessagesQuery as MessagesQuery } from '../graphql/operation-result-types';
-import readUserFragment from '../graphql/queries/readUserFragment';
 
 import Message from '../types/message';
 
@@ -78,19 +77,11 @@ messageAdded(isFirst = false, message: Message) {
     } catch (err) { }
   }
 
-  username(message): string {
-    const user = this.appsync.client.readFragment({
-      id: USER_ID_PREFIX + message.sender,
-      fragment: readUserFragment
-    });
-    return user ? user.username : null;
-  }
-
   fromMe(message): boolean { return message.sender === this.senderId; }
 
   loadMessages(event = null, fetchPolicy = 'cache-first') {
     if (event) { event.stopPropagation(); }
-    const innerObserable = this.appsync.client.hydrated().then(client => {
+    const innerObserable = this.appsync.hc().then(client => {
       console.log('chat-message-view: loadMessages', this._conversation.id, fetchPolicy);
       const options = {
         query: getConversationMessages,

@@ -5,22 +5,20 @@ import { AppComponent } from './app.component';
 import { NavComponent } from './nav/nav.component';
 import { FooterComponent } from './footer/footer.component';
 import { HomeComponent } from './home/home.component';
+import { AuthRoutingModule } from './auth/auth-routing/auth-routing.module';
 import { RoutingModule } from './routing.module';
-import { AuthService } from './auth.service';
+import { SigninComponent } from './auth/signin/signin.component';
+import { SignupComponent } from './auth/signup/signup.component';
+import { SignoutComponent } from './auth/signout/signout.component';
+import { ConfirmComponent } from './auth/confirm/confirm.component';
 import { ServiceWorkerModule } from '@angular/service-worker';
-import { OrderModule } from 'ngx-order-pipe';
-import {NgxPageScrollModule} from 'ngx-page-scroll';
-// import { HttpClientModule } from '@angular/common/http';
-import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
+import { NgxPageScrollModule } from 'ngx-page-scroll';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { environment } from '../environments/environment';
-
-// import { ApolloModule } from 'apollo-angular';
-// import { HttpLinkModule } from 'apollo-angular-link-http';
-
 import { MomentAgoPipe } from './moment-ago.pipe';
 import { AuthGuard } from './auth-guard.service';
 import { appsyncServiceProvider } from './appsync.service.provider';
-
+import { AuthService } from './auth/auth.service';
 import { ChatComponent } from './chat/chat.component';
 import { ChatMessageComponent } from './chat-message/chat-message.component';
 import { ChatInputComponent } from './chat-input/chat-input.component';
@@ -29,6 +27,10 @@ import { ChatConvoListComponent } from './chat-convo-list/chat-convo-list.compon
 import { ChatMessageViewComponent } from './chat-message-view/chat-message-view.component';
 
 import { InfscrollDirective } from './infscroll.directive';
+
+import Amplify from 'aws-amplify';
+import aws_exports from '../aws-exports';
+Amplify.configure(aws_exports);
 
 @NgModule({
   declarations: [
@@ -43,24 +45,24 @@ import { InfscrollDirective } from './infscroll.directive';
     ChatUserListComponent,
     ChatConvoListComponent,
     ChatMessageViewComponent,
+    SigninComponent,
+    SignupComponent,
+    SignoutComponent,
+    ConfirmComponent,
     InfscrollDirective
   ],
   imports: [
-
-    // HttpClientModule, // provides HttpClient for HttpLink
-    // ApolloModule,
-    // HttpLinkModule,
-    OrderModule,
     NgxPageScrollModule,
     BrowserModule,
+    AuthRoutingModule,
     RoutingModule,
     FormsModule,
     ServiceWorkerModule.register('/ngsw-worker.js', { enabled: environment.production }),
     NgbModule.forRoot()
   ],
   providers: [
-    AuthService,
     AuthGuard,
+    AuthService,
     appsyncServiceProvider
   ],
   bootstrap: [AppComponent]

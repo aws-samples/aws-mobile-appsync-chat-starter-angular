@@ -5,7 +5,7 @@ import createMessage from '../graphql/mutations/createMessage';
 import getConversationMessages from '../graphql/queries/getConversationMessages';
 import { unshiftMessage, constants } from '../chat-helper';
 import Message from '../types/message';
-import Amplify, { Analytics } from 'aws-amplify';
+import { Analytics } from 'aws-amplify';
 import aws_exports from '../../aws-exports';
 
 @Component({
@@ -19,9 +19,7 @@ export class ChatInputComponent {
 
   @Input() conversation: any;
   @Input() senderId: string;
-  constructor(private appsync: AppsyncService) {
-    Amplify.configure(aws_exports);
-   }
+  constructor(private appsync: AppsyncService) {}
 
   createNewMessage() {
     const date = Date.now();
@@ -36,7 +34,7 @@ export class ChatInputComponent {
     };
     console.log('new message', message);
     this.message = '';
-    this.appsync.client.hydrated().then(client => {
+    this.appsync.hc().then(client => {
       client.mutate({
         mutation: createMessage,
         variables: message,

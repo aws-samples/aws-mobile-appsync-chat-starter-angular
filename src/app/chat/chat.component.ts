@@ -1,6 +1,4 @@
 import { Component, OnInit  } from '@angular/core';
-import { AuthService } from '../auth.service';
-import { CONFIG } from '../config';
 import { SwUpdate } from '@angular/service-worker';
 import {PageScrollConfig} from 'ngx-page-scroll';
 
@@ -13,6 +11,8 @@ import Conversation from '../types/conversation';
 import { AppsyncService } from '../appsync.service';
 import createUser from '../graphql/mutations/createUser';
 
+import { Auth } from 'aws-amplify';
+
 
 @Component({
   selector: 'app-chat',
@@ -22,13 +22,14 @@ import createUser from '../graphql/mutations/createUser';
 export class ChatComponent implements OnInit {
 
   username: string;
+  userId: string;
   client: AWSAppSyncClient;
   me: User;
   conversation: Conversation;
   update: boolean;
+  token: string;
 
   constructor(
-    private authService: AuthService,
     private swUpdate: SwUpdate,
     private appsync: AppsyncService
   ) {
@@ -36,18 +37,16 @@ export class ChatComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.authService.parse();
-    this.authService.getSession();
-
-    const token = this.authService.session.idToken.jwtToken;
-    const parsed_token = this.parseJwt(token);
-    this.username = parsed_token['cognito:username'];
-
-    this.logInfoToConsole(token);
-
-    this.register();
-
-    this.appsync.initClient();
+    Auth.currentSession().then(session => {
+      this.logInfoToConsole(session);
+      this.token=session.idToken.jwtToken;
+      const parsed_token = this.parseJwt(this.token);
+      //this.username = session.idToken.payload['cognito:username'];
+      this.username = parsed_token['cognito:username'];
+      this.userId = parsed_token['sub'];
+      console.log(this.username,this.userId);
+      this.register();
+    });
 
     this.swUpdate.available.subscribe(event => {
       console.log('[App] Update available: current version is', event.current, 'available version is', event.available);
@@ -55,18 +54,20 @@ export class ChatComponent implements OnInit {
     });
   }
 
-  logInfoToConsole(token) {
-    console.log(`ID Token: <${token}>`);
+  logInfoToConsole(session) {
+    console.log(session);
+    console.log(`ID Token: <${session.idToken.jwtToken}>`);
     console.log('Decoded ID Token:');
-    console.log(JSON.stringify(this.parseJwt(token), null, 2));
-    console.log('Signed In: ' +  this.authService.isLoggedIn);
   }
 
   register() {
-    this.appsync.client.hydrated().then(client => {
+    this.appsync.hc().then(client => {
       client.mutate({
         mutation: createUser,
-        variables: { 'username': this.username }
+        variables: { 
+          'username': this.username,
+          'id': this.userId
+        }
       })
       .then(({data}) => {
         if (data) {

@@ -2,11 +2,11 @@
     "version" : "2017-02-28",
     "operation" : "PutItem",
     "key": {
-        "cognitoId": { "S" : "${context.identity.sub}"}
+        "cognitoId": { "S" : "${context.arguments.id}"}
     },
     "attributeValues" : {
-        "cognitoId": {  "S": "${context.identity.sub}" },
+        "cognitoId": {  "S": "${context.arguments.id}" },
 		"username": {  "S": "${context.arguments.username}" },
-        "id": {  "S": "${context.identity.sub}" }
+        "id": {  "S": "${context.arguments.id}" }
     }
 }

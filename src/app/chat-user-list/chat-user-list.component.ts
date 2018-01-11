@@ -10,8 +10,7 @@ import Conversation from '../types/conversation';
 import * as _ from 'lodash';
 import { v4 as uuid } from 'uuid';
 
-import Amplify, { Analytics } from 'aws-amplify';
-import aws_exports from '../../aws-exports';
+import { Analytics } from 'aws-amplify';
 
 import User from '../types/user';
 
@@ -24,7 +23,7 @@ export class ChatUserListComponent implements OnInit {
 
   _user;
   users: User[] = [];
-  order: string = 'username';
+  order = 'username';
 
   @Input()
   set user(user) {
@@ -34,9 +33,7 @@ export class ChatUserListComponent implements OnInit {
 
   @Output() onNewConvo = new EventEmitter<any>();
 
-  constructor(private appsync: AppsyncService) { 
-    Amplify.configure(aws_exports);
-  }
+  constructor(private appsync: AppsyncService) {}
 
   ngOnInit() { this.getAllUsers(); }
 
@@ -45,14 +42,14 @@ export class ChatUserListComponent implements OnInit {
   }
 
   getAllUsers() {
-    this.appsync.client.hydrated().then(client => {
+    this.appsync.hc().then(client => {
       client.watchQuery({
         query: getAllUsers,
         fetchPolicy: 'cache-and-network',
         ssr: false
       }).subscribe(({data}) => {
         if (!data) { return console.log('getAllUsers - no data'); }
-        this.users = data.allUser;
+        this.users = _.sortBy(data.allUser, 'username');
         if (this._user) { this.filterUsers(); }
       });
     });
@@ -61,26 +58,27 @@ export class ChatUserListComponent implements OnInit {
   createNewConversation(user, event) {
     event.stopPropagation();
 
-    const options = {
-      query: getUserConversationsConnection,
-      variables: { first: constants.conversationFirst }
-    };
+    this.appsync.hc().then(client => {
 
-    const userConvos = this.appsync.client.readQuery(options);
-    const path = 'me.conversations.userConversations';
-    const userConvo = _.chain(userConvos).get(path).find(c => _.some(c.associated, ['userId', user.id])).value();
+      const options = {
+        query: getUserConversationsConnection,
+        variables: { first: constants.conversationFirst }
+      };
 
-    if (userConvo) {
-      return this.onNewConvo.emit(userConvo.conversation);
-    }
+      const userConvos = client.readQuery(options);
+      const path = 'me.conversations.userConversations';
+      const userConvo = _.chain(userConvos).get(path).find(c => _.some(c.associated, ['userId', user.id])).value();
 
-    const newConvo: Conversation = {
-      id: uuid(),
-      name: _.map([this._user, user], 'username').sort().join(' and '),
-      createdAt: `${Date.now()}`
-    };
+      if (userConvo) {
+        return this.onNewConvo.emit(userConvo.conversation);
+      }
 
-    this.appsync.client.hydrated().then(client => {
+      const newConvo: Conversation = {
+        id: uuid(),
+        name: _.map([this._user, user], 'username').sort().join(' and '),
+        createdAt: `${Date.now()}`
+      };
+
       client.mutate({
         mutation: createConversation,
         variables: newConvo
@@ -89,8 +87,8 @@ export class ChatUserListComponent implements OnInit {
       .then(() => createUserConvo(client, this._user.id, newConvo.id, true))
       .then(() => this.onNewConvo.emit(newConvo))
       .catch(err => console.log('create convo error', err));
+      Analytics.record('New Conversation');
     });
-    Analytics.record('New Conversation');
   }
 }
 

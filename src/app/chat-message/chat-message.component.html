@@ -7,7 +7,7 @@
     <h6 class="card-title mb-1 float-left"
     [class.text-primary]="fromMe"
     [class.text-success]="!fromMe">
-    {{username}}
+    {{user?.username}}
   </h6>
   <div class='float-right'>
     <small class="card-subtitle mb-0 text-muted">{{message.createdAt | momentAgo }}</small>

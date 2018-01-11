@@ -2,7 +2,7 @@ import gql from 'graphql-tag';
 
 export default gql`
 query getUserConversationConnectionThroughUser($after: String, $first: Int) {
-  me(random: "") {
+  me {
     conversations(first: $first, after: $after) {
       __typename
       nextToken

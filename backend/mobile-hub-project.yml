@@ -1,15 +1,30 @@
----!com.amazonaws.mobilehub.v0.Project 
+--- !com.amazonaws.mobilehub.v0.Project
 features:
-  content-delivery: !com.amazonaws.mobilehub.v0.ContentDelivery 
+  content-delivery: !com.amazonaws.mobilehub.v0.ContentDelivery
     attributes:
       enabled: true
       visibility: public-global
     components:
       release: !com.amazonaws.mobilehub.v0.Bucket {}
-  mobile-analytics: !com.amazonaws.mobilehub.v0.Pinpoint 
+  mobile-analytics: !com.amazonaws.mobilehub.v0.Pinpoint
     components:
       analytics: !com.amazonaws.mobilehub.v0.PinpointAnalytics {}
-name: ChatQL
+  sign-in: !com.amazonaws.mobilehub.v0.SignIn
+    attributes:
+      enabled: true
+      optional-sign-in: false
+    components:
+      sign-in-user-pools: !com.amazonaws.mobilehub.v0.UserPoolsIdentityProvider
+        attributes:
+          alias-attributes:
+            - email
+          mfa-configuration: OFF
+          name: userpool
+          password-policy: !com.amazonaws.mobilehub.ConvertibleMap
+            min-length: "8"
+            require-lower-case: true
+            require-numbers: true
+            require-symbols: true
+            require-upper-case: true
+name: aws-mobile-appsync-chat-starter-angular
 region: us-east-1
-uploads: []
-sharedComponents: {}

@@ -1,6 +1,6 @@
 <div class="container-fluid mb-60px pb-2 align-middle">
   <div *ngIf="update;">
-    <p> 
+    <p>
       <ngb-alert type="primary" [dismissible]="false">
         <span>New version available
           <button class="btn btn-primary float-right" (click)="activateUpdate()">Update</button>
@@ -17,7 +17,7 @@
         <div class="left-pane">
 
           <app-chat-user-list [user]="me" (onNewConvo)="setNewConvo($event)" pageScroll href="#chat"></app-chat-user-list>
-          <app-chat-convo-list [current]="conversation" (onConvoClick)="setNewConvo($event)" pageScroll href="#chat"></app-chat-convo-list>
+          <app-chat-convo-list [user]="me" [current]="conversation" (onConvoClick)="setNewConvo($event)" pageScroll href="#chat"></app-chat-convo-list>
 
         </div>
       </div>

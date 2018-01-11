@@ -1,0 +1,23 @@
+<div class="container">
+    <h2>Sign In</h2>
+    <p class="text-danger" *ngIf="errorMessage">{{errorMessage}}</p>
+    <form (ngSubmit)="onSubmit()" #signinForm="ngForm">
+      <div class="form-group">
+        <label for="username">Username</label>
+        <input type="text" class="form-control" id="username" required
+        [(ngModel)]="model.username" name="username"
+        >
+      </div>
+
+      <div class="form-group">
+        <label for="password">Password</label>
+        <input type="password" class="form-control" id="password" required
+        [(ngModel)]="model.password" name="password"
+        >
+      </div>
+
+      <button type="submit" class="btn btn-success">Submit</button>
+      <span>or <a routerLink='/signup'>Sign Up</a></span>
+
+    </form>
+</div>

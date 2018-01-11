@@ -6,7 +6,6 @@
     <div #scrollMe class="chat" [appInfscroll]="loadMoreMessages" [completedFetching]="completedFetching">
       <app-chat-message *ngFor="let message of messages; last as isLast; first as isFirst"
       [message]="message"
-      [username]="username(message)"
       [fromMe]="fromMe(message)"
       [isLast]="isLast"
       [isFirst]="isFirst"

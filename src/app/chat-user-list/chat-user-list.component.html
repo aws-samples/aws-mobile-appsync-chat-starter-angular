@@ -3,7 +3,7 @@
 </div>
 <div class="user-list">
   <div class="list-group mb-2 ">
-    <a href='#' *ngFor="let user of users | orderBy: order"
+    <a href='#' *ngFor="let user of users"
     class="list-group-item list-group-item-action p-2 border-0 bg-light"
     (click)="createNewConversation(user, $event); false">
     {{user.username}}</a>

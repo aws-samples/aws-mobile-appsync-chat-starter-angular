@@ -5,12 +5,12 @@
   </a>
   <ul class="nav navbar-nav">
     <li *ngIf="isLoggedIn; else signinBlock" class="nav-item">
-      <button type="button" class="btn btn-primary" (click)="auth.signout()">Sign Out <i class="ion-log-out" data-pack="default" data-tags="sign out"></i></button>
+        <a class="btn btn-primary" routerLink="/signout">Signout <i class="ion-log-out" data-pack="default" data-tags="sign in"></i></a>
     </li>
 
     <ng-template #signinBlock>
       <li class="nav-item">
-        <button type="button" class="btn btn-primary" (click)="auth.signin()">Connect <i class="ion-log-in" data-pack="default" data-tags="sign in"></i></button>
+        <a class="btn btn-primary" routerLink="/chat">Connect <i class="ion-log-in" data-pack="default" data-tags="sign in"></i></a>
       </li>
     </ng-template>
   </ul>

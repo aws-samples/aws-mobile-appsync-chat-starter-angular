@@ -1,4 +1,4 @@
-import update from 'immutability-helper';
+import * as update from 'immutability-helper';
 import {
   getConversationMessagesQuery as MessagesQuery,
   getUserConversationConnectionThroughUserQuery as ConvosQuery
