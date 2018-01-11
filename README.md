@@ -40,7 +40,7 @@ Setup
 
 1. Clone this repository
 
-2. Click the button to create a Mobile Hub project that will deploy User Sign-In, Analytics and Hosting resources, name the project as "ChatQL" and follow the instructions in the console:
+2. Click the button to create a Mobile Hub project that will deploy User Sign-In, Analytics and Hosting resources, name the project as ```ChatQL``` and follow the instructions in the console:
 
 
 <p align="center">
@@ -53,54 +53,52 @@ Setup
 
 3. Go to the project and click on ADD NEW APP then select WEB. Follow the instructions.
 
-4. Execute the "awsmobile init xxxxxxxxxxxxxx" command the root folder and provide the following details:
+4. Execute the ```awsmobile init xxxxxxxxxxxxxx``` command the root folder and provide the following details:
 
-* Source Directory: src
-* Distribution Directory: dist
-* Build Command: ng build --prod
+* Source Directory: ```src```
+* Distribution Directory: ```dist```
+* Build Command: ```ng build --prod```
 
-This will copy the "aws-exports.js" file to the "/src" folder and configure the resources accordingly.
+This will copy the ```aws-exports.js``` file to the ```/src``` folder and configure the resources accordingly.
 
-(Alternatively, after the project is created in the Mobile Hub console download the "aws-exports.js" configuration file by clicking the Hosting and Streaming tile then download the file "aws-exports.js", then copy the file "aws-exports.js" to the "/src" folder)
+4. Execute the shell script ```setup.sh``` from the folder ```/backend```. The script will create an IAM Service Role, AppSync API, Data Sources (DynamoDB Tables), Resolvers and a GraphQL Schema 
 
-4. Execute the shell script "setup.sh" from the folder "/backend". The script will create an IAM Service Role, AppSync API, Data Sources (DynamoDB Tables), Resolvers and a GraphQL Schema 
+5. Go to the AWS AppSync Console and select the ChatQL API created on the previous step. From the homepage of your GraphQL API (or you can click on ```ChatQL``` in the left hand navigation), select WEB at the bottom to download your ```AppSync.js``` configuration file into your project's ```/src``` directory.
 
-5. Go to the AWS AppSync Console and select the ChatQL API created on the previous step. From the homepage of your GraphQL API (or you can click on "ChatQL" in the left hand navigation), select WEB at the bottom to download your "AppSync.js" configuration file into your project's "/src" directory.
-
-6. Now go to the root folder of the cloned repository and execute the following command to install all packages and test the application locally (if there are any errors, copy the file backend/mobile-hub-project.yml to the folder awsmobilejs/backend/):
+6. Now go to the root folder of the cloned repository and execute the following command to install all packages and test the application locally (if there are any errors, copy the file ```backend/mobile-hub-project.yml``` to the folder ```awsmobilejs/backend/``` and try again):
 
 ```
 awsmobile run
 ```
 
-6. Access your ChatQL app on http://localhost:4200 and Sign Up/In at least 2 test users
+7. Access your ChatQL app on http://localhost:4200 and Sign Up/In at least 2 test users
 
 Host your ChatQL app in CloudFront and add Pinpoint Analytics with Mobile Hub and AWS Amplify
 =============================================================================================
 
-1. Execute "awsmobile publish" from the root folder of the cloned repository (If there are any errors, copy the file backend/mobile-hub-project.yml to the folder awsmobilejs/backend/)
+1. Execute ```awsmobile publish``` from the root folder of the cloned repository (If there are any errors, copy the file ```backend/mobile-hub-project.yml``` to the folder ```awsmobilejs/backend/``` and try again)
 
-2. If you want to access the application from S3, while the application is building/publishing, go back to the Mobile Hub console and select HOSTING & STREAMING -> MANAGE FILES -> PROPERTIES -> STATIC WEB SITE HOSTING and add "index.html" under ERROR DOCUMENT
+2. If you want to access the application from S3, while the application is building/publishing, go back to the Mobile Hub console and select HOSTING & STREAMING -> MANAGE FILES -> PROPERTIES -> STATIC WEB SITE HOSTING and add ```index.html``` under ERROR DOCUMENT
 
 3. If you want to access the application from CloudFront, while the application is building/publishing, go back to the Mobile Hub console and select HOSTING & STREAMING -> EDIT YOUR CDN DISTRIBUTION -> ERROR PAGES -> CREATE CUSTOM ERROR RESPONSE. Use the following settings:
 
-* HTTP Error Code: 403
-* Minimun TTL: 0
-* Customize Error Response: Yes
-* Response Path: /index.html
-* HTTP Response Code: 200
+* HTTP Error Code: ```403```
+* Minimun TTL: ```0```
+* Customize Error Response: ```Yes```
+* Response Path: ```/index.html```
+* HTTP Response Code: ```200```
 
-The last two steps are necessary because of the way Angular internal routing works. An authenticated request will be redirected to /chat that doesn't exist on S3, only internally in the Angular application.
+The last two steps are necessary because of the way Angular internal routing works. An authenticated request will be redirected to ```/chat``` that doesn't exist on S3, only internally in the Angular application.
 
 4. Wait until the CloudFront settings are replicated (Status: Deployed)
 
-5. Access your public ChatQL application using the S3 Website Endpoint URL or the CloudFront URL returned by the "awsmobile publish" command, share the link, sign up users and start sending messages and creating conversations with other users.
+5. Access your public ChatQL application using the S3 Website Endpoint URL or the CloudFront URL returned by the ```awsmobile publish``` command, share the link, get new users to sign up and start sending messages and creating conversations with other users.
 
-6. The "aws-exports.js" files also provides the Amazon Pinpoint project details to start collecting analytics data from the chat activity in the application. AWS Amplify is configured to send custom events to Pinpoint when a message is sent and when a conversation is created (/src/app/chat-input/chat-input.component.ts and /src/app/chat-user-list/chat-user-list.component.ts)
+6. The ```aws-exports.js``` file also provides the Amazon Pinpoint project details to start collecting analytics data from the chat activity in the application. AWS Amplify is configured to send custom events to Pinpoint when a message is sent and when a conversation is created (```/src/app/chat-input/chat-input.component.ts``` and ```/src/app/chat-user-list/chat-user-list.component.ts```)
 
-7. After a couple of minutes go to the Amazon Pinpoint console, select the project, go to ANALYTICS -> EVENTS and select the specific event ("Chat MSG Sent" or "New Conversation" Events) from the EVENT dropdown menu to see the data about the related custom event.
+7. After a couple of minutes go to the Amazon Pinpoint console, select the project, go to ANALYTICS -> EVENTS and select the specific event (```Chat MSG Sent``` or ```New Conversation``` Events) from the EVENT dropdown menu to see the data about the related custom event.
 
 Clean Up
 ========
 
-Execute the script "teardown.sh" under the "/backend" folder
+Execute the script ```teardown.sh``` under the ```/backend``` folder
