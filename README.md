@@ -7,7 +7,7 @@ This is a Starter Angular progressive web application (PWA) that takes advantage
   <img src="screenshots/chatql.png">
 </p>
 
-## Features
+### Features
 
 - PWA: A progressive web application takes advantage of the latest technologies such as Service Workers to combine the best of web and mobile apps. Think of it as a website built using web technologies but that acts and feels like an app in a mobile device. 
 
@@ -30,7 +30,7 @@ This is a Starter Angular progressive web application (PWA) that takes advantage
 Setup
 ======
 
-## Pre-Reqs
+### Pre-Reqs
 
 * AWS Account with appropriate permissions
 * [AWS CLI](http://docs.aws.amazon.com/cli/latest/userguide/installing.html)
@@ -39,7 +39,7 @@ Setup
 * [AWS Mobile CLI](https://github.com/aws/awsmobile-cli) - ```npm install -g awsmobile-cli```
 * [Angular CLI](https://github.com/angular/angular-cli) - ```npm install -g angular-cli```
 
-## Instructions
+### Instructions
 
 1. Clone this repository
 
