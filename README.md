@@ -7,15 +7,6 @@ This is a Starter Angular progressive web application (PWA) that takes advantage
   <img src="screenshots/chatql.png">
 </p>
 
-## Pre-Reqs
-
-* AWS Account with appropriate permissions
-* [AWS CLI](http://docs.aws.amazon.com/cli/latest/userguide/installing.html)
-* Shell Script support (Linux/Mac/[Windows](https://docs.microsoft.com/en-us/windows/wsl/install-win10))
-* [NPM](https://www.npmjs.com/get-npm)
-* [AWS Mobile CLI](https://github.com/aws/awsmobile-cli) - ```npm install -g awsmobile-cli```
-* [Angular CLI](https://github.com/angular/angular-cli) - ```npm install -g angular-cli```
-
 ## Features
 
 - PWA: A progressive web application takes advantage of the latest technologies such as Service Workers to combine the best of web and mobile apps. Think of it as a website built using web technologies but that acts and feels like an app in a mobile device. 
@@ -39,13 +30,24 @@ This is a Starter Angular progressive web application (PWA) that takes advantage
 Setup
 ======
 
+## Pre-Reqs
+
+* AWS Account with appropriate permissions
+* [AWS CLI](http://docs.aws.amazon.com/cli/latest/userguide/installing.html)
+* Shell Script support (Linux/Mac/[Windows](https://docs.microsoft.com/en-us/windows/wsl/install-win10))
+* [NPM](https://www.npmjs.com/get-npm)
+* [AWS Mobile CLI](https://github.com/aws/awsmobile-cli) - ```npm install -g awsmobile-cli```
+* [Angular CLI](https://github.com/angular/angular-cli) - ```npm install -g angular-cli```
+
+## Instructions
+
 1. Clone this repository
 
 2. Click the button to create a Mobile Hub project that will deploy User Sign-In, Analytics and Hosting resources, name the project as ```ChatQL``` and follow the instructions in the console:
 
 
 <p align="center">
-   <a target="_blank" href="https://console.aws.amazon.com/mobilehub/home#/starterkit/?config=https://github.com/awsed/chatql/blob/master/backend/mobile-hub-project.zip">
+   <a target="_blank" href="https://console.aws.amazon.com/mobilehub/home#/starterkit/?config=https://github.com/aws-samples/aws-mobile-appsync-chat-starter-angular/blob/master/backend/mobile-hub-project.zip">
    <span>
        <img height="100%" src="https://s3.amazonaws.com/deploytomh/button-deploy-aws-mh.png"/>
    </span>
