@@ -31,7 +31,7 @@
     "apollo-angular": "1.0.0",
     "apollo-angular-link-http": "1.0.1",
     "apollo-cache-inmemory": "1.1.4",
-    "apollo-client": "2.0.4",
+    "apollo-client": "2.2.0",
     "aws-amplify": "0.1.34",
     "aws-appsync": "1.0.4",
     "babel-polyfill": "^6.26.0",
