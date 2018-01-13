@@ -1,7 +1,11 @@
 <div class="container">
-    <h2>Sign In</h2>
-    <p class="text-danger" *ngIf="errorMessage">{{errorMessage}}</p>
-    <form (ngSubmit)="onSubmit()" #signinForm="ngForm">
+    <div class="jumbotron p-0 m-0 vertical-center">
+      <div class="justify-content-center p-0 m-0">
+        <img class="chatql-image rounded-top img-fluid" src="../../assets/img/chat.jpg" alt="https://freerangestock.com/photos/65403/exchanging-ideas--argument-and-debate-concept.html">
+      </div>
+      <p class="text-danger" *ngIf="errorMessage">{{errorMessage}}</p>
+    <form class="p-3" (ngSubmit)="onSubmit()" #signinForm="ngForm">
+      <h3 class="display-5 text-center">Sign In</h3>
       <div class="form-group">
         <label for="username">Username</label>
         <input type="text" class="form-control" id="username" required
@@ -16,8 +20,12 @@
         >
       </div>
 
-      <button type="submit" class="btn btn-success">Submit</button>
+      <button type="submit" class="btn btn-primary">Submit</button>
       <span>or <a routerLink='/signup'>Sign Up</a></span>
 
     </form>
-</div>
+    </div>
+  </div>
+  <br/>
+  <br/>
+  <br/>

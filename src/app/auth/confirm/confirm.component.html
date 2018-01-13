@@ -1,21 +1,30 @@
 <div class="container">
-  <h2>Confirm Account</h2>
-  <p class="text-danger" *ngIf="errorMessage">{{errorMessage}}</p>
-  <form (ngSubmit)="onSubmit()" #confirmForm="ngForm">
-    <div class="form-group">
-      <label for="username">Username</label>
-      <input type="text" class="form-control" id="username" required
-        [(ngModel)]="model.username" name="username" placeholder="username"
-      >
+  <div class="jumbotron p-0 m-0 vertical-center">
+    <div class="justify-content-center p-0 m-0">
+      <img class="chatql-image rounded-top img-fluid" src="../../assets/img/chat.jpg" alt="https://freerangestock.com/photos/65403/exchanging-ideas--argument-and-debate-concept.html">
     </div>
-
-    <div class="form-group">
-      <label for="code">Code</label>
-      <input type="code" class="form-control" id="code" required
-      [(ngModel)]="model.code" name="code" placeholder="code"
-      >
+    <p class="text-danger" *ngIf="errorMessage">{{errorMessage}}</p>
+    <form class="p-3" (ngSubmit)="onSubmit()" #confirmForm="ngForm">
+      <h3 class="display-5 text-center">Confirm Account</h3>
+      <div class="form-group">
+        <label for="username">Username</label>
+        <input type="text" class="form-control" id="username" required
+          [(ngModel)]="model.username" name="username" placeholder="username"
+        >
+      </div>
+  
+      <div class="form-group">
+        <label for="code">Code</label>
+        <input type="code" class="form-control" id="code" required
+        [(ngModel)]="model.code" name="code" placeholder="code"
+        >
+      </div>
+  
+      <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
     </div>
+  </div>
+  <br/>
+  <br/>
+  <br/>
 
-    <button type="submit" class="btn btn-success">Submit</button>
-  </form>
-</div>
