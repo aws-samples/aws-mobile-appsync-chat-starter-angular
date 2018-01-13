@@ -13,8 +13,8 @@
   <div class="row">
     <div class="col-sm-4 p-1">
 
-      <div class="border bg-light border-dark rounded rounded p-2 h-100">
-        <div class="left-pane">
+      <div class="border bg border-dark rounded rounded p-2 h-100">
+        <div class="left-pane bg">
 
           <app-chat-user-list [user]="me" (onNewConvo)="setNewConvo($event)" pageScroll href="#chat"></app-chat-user-list>
           <app-chat-convo-list [user]="me" [current]="conversation" (onConvoClick)="setNewConvo($event)" pageScroll href="#chat"></app-chat-convo-list>
@@ -33,7 +33,7 @@
 </div>
 
 <ng-template #instructions>
-  <div class= "bg-light rounded p-2 border border-dark rounded text-center instructions">
+  <div class= "bg rounded p-2 border border-dark rounded text-center instructions">
     <p class= "p-5 m-5 h5 rounded-circle bg-dark text-white instructions-text">Welcome, <strong>{{username}}</strong>! Select a User or a Conversation to start or continue a ChatQL</p>
   </div>
 </ng-template>

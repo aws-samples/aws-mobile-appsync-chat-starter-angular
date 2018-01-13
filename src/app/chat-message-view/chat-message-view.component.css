@@ -7,3 +7,7 @@
 :host ::ng-deep app-chat-message:first-child .chat-message {
   /* margin-top: 1em; */
 }
+
+.bg {
+  background-color: #e4e7eb;
+}

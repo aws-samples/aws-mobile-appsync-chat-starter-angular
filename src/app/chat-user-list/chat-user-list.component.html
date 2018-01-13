@@ -2,7 +2,7 @@
   <h6 class='mb-0'><i class="ion-ios-person" data-pack="default" data-tags="talk"></i> Users</h6>
 </div>
 <div class="user-list">
-  <div class="list-group mb-2 ">
+  <div class="list-group mb-2">
     <div *ngIf="no_user;">
         <br/>
         <ngb-alert type="success" [dismissible]="false">
@@ -10,7 +10,7 @@
         </ngb-alert>
     </div>
     <a href='#' *ngFor="let user of users"
-    class="list-group-item list-group-item-action p-2 border-0 bg-light"
+    class="list-group-item list-group-item-action p-2 border-0 bg"
     (click)="createNewConversation(user, $event); false">
     {{user.username}}</a>
   </div>

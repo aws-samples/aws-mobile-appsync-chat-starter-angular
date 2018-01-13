@@ -22,12 +22,10 @@ import { Auth } from 'aws-amplify';
 export class ChatComponent implements OnInit {
 
   username: string;
-  userId: string;
   client: AWSAppSyncClient;
   me: User;
   conversation: Conversation;
   update: boolean;
-  token: string;
 
   constructor(
     private swUpdate: SwUpdate,
@@ -39,12 +37,7 @@ export class ChatComponent implements OnInit {
   ngOnInit() {
     Auth.currentSession().then(session => {
       this.logInfoToConsole(session);
-      this.token=session.idToken.jwtToken;
-      const parsed_token = this.parseJwt(this.token);
-      //this.username = session.idToken.payload['cognito:username'];
-      this.username = parsed_token['cognito:username'];
-      this.userId = parsed_token['sub'];
-      console.log(this.username,this.userId);
+      this.username = session.idToken.payload['cognito:username'];
       this.register();
     });
 
@@ -58,16 +51,14 @@ export class ChatComponent implements OnInit {
     console.log(session);
     console.log(`ID Token: <${session.idToken.jwtToken}>`);
     console.log('Decoded ID Token:');
+    console.log(JSON.stringify(session.idToken.payload, null, 2));
   }
 
   register() {
     this.appsync.hc().then(client => {
       client.mutate({
         mutation: createUser,
-        variables: { 
-          'username': this.username,
-          'id': this.userId
-        }
+        variables: { 'username': this.username }
       })
       .then(({data}) => {
         if (data) {
@@ -81,12 +72,6 @@ export class ChatComponent implements OnInit {
   }
 
   setNewConvo(convo) { this.conversation = convo; }
-
-  parseJwt(token) {
-    const payload = token.split('.')[1];
-    const parser = JSON.parse(atob(payload));
-    return parser;
-  }
 
   checkForUpdate() {
     console.log('[ChatQL] checkForUpdate started');

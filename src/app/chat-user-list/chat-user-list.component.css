@@ -1,6 +1,15 @@
 .user-list {
-    height: auto;
-    max-height: 30vh !important;
-    overflow-x: hidden !important;
-    overflow-y: auto;
-  }
+  height: auto;
+  max-height: 30vh !important;
+  overflow-x: hidden !important;
+  overflow-y: auto;
+}
+
+.bg {
+  background-color: #e4e7eb;
+}
+
+.list-group-item:hover {
+  color: white;
+  background-color: gray; 
+}
