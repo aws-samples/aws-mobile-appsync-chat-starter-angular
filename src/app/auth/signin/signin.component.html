@@ -3,18 +3,17 @@
       <div class="justify-content-center p-0 m-0">
         <img class="chatql-image rounded-top img-fluid" src="../../assets/img/chat.jpg" alt="https://freerangestock.com/photos/65403/exchanging-ideas--argument-and-debate-concept.html">
       </div>
-      <p class="text-danger" *ngIf="errorMessage">{{errorMessage}}</p>
     <form class="p-3" (ngSubmit)="onSubmit()" #signinForm="ngForm">
       <h3 class="display-5 text-center">Sign In</h3>
       <div class="form-group">
-        <label for="username">Username</label>
+        <label for="username"><strong>User Name</strong></label>
         <input type="text" class="form-control" id="username" required
         [(ngModel)]="model.username" name="username"
         >
       </div>
 
       <div class="form-group">
-        <label for="password">Password</label>
+        <label for="password"><strong>Password</strong></label>
         <input type="password" class="form-control" id="password" required
         [(ngModel)]="model.password" name="password"
         >
@@ -24,6 +23,7 @@
       <span>or <a routerLink='/signup'>Sign Up</a></span>
 
     </form>
+    <p class="text-danger text-center" *ngIf="errorMessage">{{errorMessage}}</p>
     </div>
   </div>
   <br/>
