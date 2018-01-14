@@ -37,7 +37,7 @@ Setup
 * Shell Script support (Linux/Mac/[Windows](https://docs.microsoft.com/en-us/windows/wsl/install-win10))
 * [NPM](https://www.npmjs.com/get-npm)
 * [AWS Mobile CLI](https://github.com/aws/awsmobile-cli) - ```npm install -g awsmobile-cli```
-* [Angular CLI](https://github.com/angular/angular-cli) - ```npm install -g angular-cli```
+* [Angular CLI](https://github.com/angular/angular-cli) - ```npm install -g @angular/cli```
 
 ### Instructions
 
