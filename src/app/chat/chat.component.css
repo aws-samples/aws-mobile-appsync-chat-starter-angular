@@ -39,8 +39,9 @@
 }
 
 .instructions-text {
-  background:url(../../assets/img/graphql.png) no-repeat;
+  background:url(../../assets/img/chat.jpg) no-repeat;
   background-position: center center;
+  text-shadow: 2px 2px #000000;
 }
 
 .bg {
