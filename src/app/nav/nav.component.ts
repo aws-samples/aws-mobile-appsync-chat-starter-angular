@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { Auth } from 'aws-amplify';
-import { AuthService } from '../auth/auth.service';
+import { Router, NavigationEnd } from '@angular/router';
+import 'rxjs/add/operator/filter';
 
 @Component({
   selector: 'app-nav',
@@ -11,9 +12,15 @@ import { AuthService } from '../auth/auth.service';
 export class NavComponent {
 
   isLoggedIn = false;
-  constructor(private authService: AuthService) {
-    this.authService.isLoggedIn.subscribe(status => this.isLoggedIn = status);
-    Auth.currentSession().then(session => this.isLoggedIn = true)
-    .catch(err => console.log(err));
+  constructor(private router: Router) {
+    this.checkStatus();
+    router.events
+      .filter(e => e instanceof NavigationEnd)
+      .subscribe(e => this.checkStatus());
   }
-}
+
+  private checkStatus() {
+    Auth.currentSession()
+    .then(session => this.isLoggedIn = true)
+    .catch(err => this.isLoggedIn = false);  }
+  }

@@ -1,0 +1,51 @@
+
+.message {
+    width: 70%
+}
+
+.left-pane {
+    height: auto;
+    max-height: 100% !important;
+    overflow-x: hidden !important;
+}
+
+.user-list {
+  height: auto;
+  max-height: 195px !important;
+  overflow-x: hidden !important;
+  overflow-y: auto;
+}
+
+.convo-list {
+  height: auto;
+  max-height: 196px !important;
+  overflow-x: hidden !important;
+  overflow-y: auto;
+}
+
+.no-focus:focus {
+  border-color: #ced4da !important;
+  box-shadow: none;
+  outline: none;
+}
+
+.mb-60px {
+  margin-bottom: 60px;
+}
+
+.instructions {
+  height: 100%;
+  width: 100%;
+  margin: auto;
+  background:url(../../../assets/img/chat.jpg) no-repeat;
+  background-position: center center;
+  background-size:100% 100%;
+}
+
+.instructions-text {
+  text-shadow: 2px 2px 8px #000000;
+}
+
+.bg {
+  background-color: #e4e7eb;
+}

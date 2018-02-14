@@ -14,6 +14,9 @@ PREFIX=$(cat ../src/aws-exports.js | grep aws_resource_name_prefix | awk '{print
 USERPOOL=$(cat ../src/aws-exports.js | grep aws_user_pools_id | awk '{print $2}' | sed -e "s/^'//" -e "s/',//")
 TABLE_PREFIX="ChatQL_${PREFIX}"
 
+echo "Working in region: ${REGION}"
+echo
+
 aws appsync delete-graphql-api --api-id "$GRAPHQLAPI" --region $REGION > /dev/null 2>&1
 if [ "$?" -ne 0 ]; then
   echo "Could not delete AppSync API $GRAPHQLAPI"

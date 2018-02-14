@@ -12,6 +12,9 @@ PREFIX=$(cat ../src/aws-exports.js | grep aws_resource_name_prefix | awk '{print
 USERPOOL=$(cat ../src/aws-exports.js | grep aws_user_pools_id | awk '{print $2}' | sed -e "s/^'//" -e "s/',//")
 TABLE_PREFIX="ChatQL_${PREFIX}"
 
+echo "Working in region: ${REGION}"
+echo
+
 aws dynamodb create-table --table-name "${TABLE_PREFIX}_Conversations" \
  --attribute-definitions AttributeName=id,AttributeType=S \
  --key-schema AttributeName=id,KeyType=HASH \
@@ -80,7 +83,7 @@ for table in ${TABLES[@]}; do
    --region $REGION > /dev/null
 done
 
-echo "AppSyncData Sources created!"
+echo "AppSync datasources created!"
 
 echo -n "Creating resolvers"
 
