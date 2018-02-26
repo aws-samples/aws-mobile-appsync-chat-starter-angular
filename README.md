@@ -1,4 +1,4 @@
-# ChatQL: A AWS AppSync Chat Starter written in Angular
+# ChatQL: An AWS AppSync Chat Starter App written in Angular
 
 ### Quicklinks
  - [Introduction](#introduction)
