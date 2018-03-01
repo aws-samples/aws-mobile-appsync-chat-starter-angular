@@ -96,7 +96,7 @@ This is a Starter Angular Progressive Web Application (PWA) that uses AWS AppSyn
       $ awsmobile run
       ```
 
-1. Access your ChatQL app at http://localhost:4200.
+1. Access your ChatQL app at http://localhost:4200. Sign up different users and test real-time/offline messaging using different browsers.
 
 ### Application Walkthrough
 
@@ -138,11 +138,11 @@ In the chat, a user can see a list of other users who have registered after sign
 
 1. Wait until the CloudFront settings are replicated (Status: Deployed)
 
-1. Access your public ChatQL application using the S3 Website Endpoint URL or the CloudFront URL returned by the `awsmobile publish` command. Share the link, sign up some users, and start creating conversations and exchanging messages.
+1. Access your public ChatQL application using the S3 Website Endpoint URL or the CloudFront URL returned by the `awsmobile publish` command. Share the link with friends, sign up some users, and start creating conversations and exchanging messages. Be mindful PWAs require SSL, in order to test PWA functionality access the CloudFront URL (HTTPS) from a mobile device and add the site to the mobile home screen.
 
 ## Clean Up
 
-In your project folder, execute the following command to teardown the resources deployed by the `setup.sh` script. Provide your account number and the ID of your AWS AppSync GraphQL API.
+In your project folder, execute the following command to teardown the resources deployed by the `setup.sh` script. Provide your account number and the ID of your AWS AppSync GraphQL API. This will DELETE all the ChatQL resources in your account.
 
 ```bash
 $ ./backend/teardown.sh
