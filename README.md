@@ -8,7 +8,7 @@
    - [Backend setup](#backend-setup)
    - [Application Walkthrough](#application-walkthrough)
    - [AWS Pinpoint Analytics](#aws-pinpoint-analytics)
- - [Building, Deploying and Publishing](#building-and-deploying)
+ - [Building, Deploying and Publishing](#building-deploying-and-publishing)
  - [Clean Up](#clean-up)
 
 ## Introduction
@@ -50,7 +50,7 @@ This is a Starter Angular Progressive Web Application (PWA) that uses AWS AppSyn
 * [Angular CLI](https://github.com/angular/angular-cli)
 
 
-### Backend setup
+### Backend Setup
 
 1. First, clone this repository and navigate to the created folder:
     ```bash
