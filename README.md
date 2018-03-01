@@ -8,7 +8,7 @@
    - [Backend setup](#backend-setup)
    - [Application Walkthrough](#application-walkthrough)
    - [AWS Pinpoint Analytics](#aws-pinpoint-analytics)
- - [Building and deploying](#building-and-deploying)
+ - [Building, Deploying and Publishing](#building-and-deploying)
  - [Clean Up](#clean-up)
 
 ## Introduction
@@ -120,7 +120,7 @@ In the chat, a user can see a list of other users who have registered after sign
 
       Click on **Analytics** in the top right corner of the console to open the Amazon Pinpoint console. Click on **Analytics** on the left, then select the **Events** tab to see your application's events. Use the Event dropdown menu to see data from your custom events (`Chat MSG Sent` or `New Conversation`).
 
-## Building and deploying
+## Building, Deploying and Publishing
 
 1. Execute `awsmobile publish` from the project's root folder.
 
