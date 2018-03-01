@@ -1,10 +1,13 @@
 import * as update from 'immutability-helper';
 import {
   getConversationMessagesQuery as MessagesQuery,
-  getUserConversationConnectionThroughUserQuery as ConvosQuery
+  getUserConversationConnectionThroughUserQuery as ConvosQuery,
+  getAllUsersQuery as UsersQuery
  } from './graphql/operation-result-types';
 import Message from './types/message';
 import UserConversation from './types/userConversation';
+import User from './types/user';
+
 import * as _ from 'lodash';
 
 export const constants = {
@@ -67,11 +70,22 @@ export function addConversation(data: ConvosQuery, uc: UserConversation): Convos
     };
   }
 
-  if (data.me.conversations.userConversations.some(_uc => _uc.conversation.id === uc.conversation.id)) {
+  if (data.me.conversations.userConversations.some(_uc => uc.conversationId === _uc.conversationId)) {
     return data;
   }
 
   return update(data, {
     me: { conversations: { userConversations: {$push: [uc]}} }
   });
+}
+export function addUser(data: UsersQuery, user: User): UsersQuery {
+  if (!data || !data.allUser) {
+    return { allUser: [] };
+  }
+
+  if (data.allUser.some(_user => _user.id === user.id)) {
+    return data;
+  }
+
+  return update(data, {allUser: {$push: [user]}});
 }

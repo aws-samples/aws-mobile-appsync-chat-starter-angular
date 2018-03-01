@@ -6,7 +6,8 @@
     },
     "attributeValues" : {
         "cognitoId": {  "S": "${context.identity.sub}" },
-		"username": {  "S": "${context.arguments.username}" },
-        "id": {  "S": "${context.identity.sub}" }
+		    "username": {  "S": "${context.arguments.username}" },
+        "id": {  "S": "${context.identity.sub}" },
+        "registered": {  "BOOL": true }
     }
 }

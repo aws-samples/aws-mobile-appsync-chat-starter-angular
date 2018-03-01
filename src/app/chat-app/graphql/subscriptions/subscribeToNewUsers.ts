@@ -1,12 +1,11 @@
 import gql from 'graphql-tag';
 
 export default gql`
-mutation createUser($username: String!) {
-  createUser(username: $username) {
+subscription subscribeToNewUsers {
+  subscribeToNewUsers {
     __typename
+    id
     cognitoId
     username
-    registered
-    id
   }
 }`;

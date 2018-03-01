@@ -4,7 +4,7 @@ type Conversation = {
     // The Conversation's name.
     name: string,
     // The Conversation's timestamp.
-    createdAt: string | null,
+    createdAt?: string | null,
   };
 
 export default Conversation;

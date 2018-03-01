@@ -16,6 +16,9 @@
       <div class="border bg border-dark rounded rounded p-2 h-100">
         <div class="left-pane bg">
 
+          <div class="text-center mb-2">
+            <span class="badge badge-pill" [class.badge-success]="me?.registered" [class.badge-warning]="!me || !me.registered">{{me?.username}}</span>
+          </div>
           <app-chat-user-list [user]="me" (onNewConvo)="setNewConvo($event)" pageScroll href="#chat"></app-chat-user-list>
           <app-chat-convo-list [user]="me" [current]="conversation" (onConvoClick)="setNewConvo($event)" pageScroll href="#chat"></app-chat-convo-list>
 

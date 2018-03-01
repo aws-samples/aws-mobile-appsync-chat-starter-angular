@@ -4,7 +4,8 @@ type User = {
   // The username
   username: string,
   // Generated id for a user. read-only
-  id: string
+  id: string,
+  registered: boolean
 };
 
 export default User;

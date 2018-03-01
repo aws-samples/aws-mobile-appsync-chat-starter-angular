@@ -9,6 +9,7 @@ import User from '../types/user';
 import Conversation from '../types/conversation';
 
 import { AppsyncService } from '../appsync.service';
+import getMe from '../graphql/queries/getMe';
 import createUser from '../graphql/mutations/createUser';
 
 import { Auth } from 'aws-amplify';
@@ -22,6 +23,7 @@ import { Auth } from 'aws-amplify';
 export class ChatComponent implements OnInit {
 
   username: string;
+  session;
   client: AWSAppSyncClient;
   me: User;
   conversation: Conversation;
@@ -37,8 +39,9 @@ export class ChatComponent implements OnInit {
   ngOnInit() {
     Auth.currentSession().then(session => {
       this.logInfoToConsole(session);
-      this.username = session.idToken.payload['cognito:username'];
+      this.session = session;
       this.register();
+      setImmediate(() => this.createUser());
     });
 
     this.swUpdate.available.subscribe(event => {
@@ -57,20 +60,43 @@ export class ChatComponent implements OnInit {
     console.log(JSON.stringify(session.accessToken.payload, null, 2));
   }
 
-  register() {
+  createUser() {
+    const user: User = {
+      username: this.session.idToken.payload['cognito:username'],
+      id: this.session.idToken.payload['sub'],
+      cognitoId: this.session.idToken.payload['sub'],
+      registered: false
+    };
+    console.log('creating user', user);
     this.appsync.hc().then(client => {
       client.mutate({
         mutation: createUser,
-        variables: { 'username': this.username }
-      })
-      .then(({data}) => {
-        if (data) {
-          this.me = data.createUser;
-          console.log('successfully registered self', this.me);
-        } else {
-          console.log('Trying to register. did not get data');
+        variables: {username: user.username},
+
+        optimisticResponse: () => ({
+          createUser: {
+            ...user,
+            __typename: 'User'
+          }
+        }),
+
+        update: (proxy, {data: { createUser: _user }}) => {
+          // console.log('createUser update with:', _user);
+          proxy.writeQuery({query: getMe, data: {me: {..._user}}});
         }
-      }).catch(error => console.log('Error trying to register', error));
+      }).catch(err => console.log('Error registering user', err));
+    });
+  }
+
+  register() {
+    this.appsync.hc().then(client => {
+      client.watchQuery({
+        query: getMe,
+        fetchPolicy: 'cache-only'
+      }).subscribe(({data}) => {
+        // console.log('register user, fetch cache', data);
+        if (data) { this.me = data.me; }
+      });
     });
   }
 

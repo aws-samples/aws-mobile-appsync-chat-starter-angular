@@ -108,6 +108,7 @@ export class ChatMessageViewComponent {
         document: subscribeToNewMessages,
         variables: { 'conversationId': this._conversation.id },
         updateQuery: (prev: MessagesQuery, {subscriptionData: {data: {subscribeToNewMessage: message }}}) => {
+          console.log('subscribeToMore - updateQuery:', message);
           return unshiftMessage(prev, message);
         }
       });

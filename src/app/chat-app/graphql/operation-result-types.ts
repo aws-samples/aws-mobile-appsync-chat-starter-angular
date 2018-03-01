@@ -93,6 +93,8 @@ export type getAllUsersQuery = {
     cognitoId: string,
     // The username
     username: string,
+    // registered?
+    registered: boolean
   } | null > | null,
 };
 
@@ -138,6 +140,7 @@ export type getUserConversationConnectionThroughUserQuery = {
       nextToken: string | null,
       userConversations:  Array< {
         __typename: "UserConversations",
+        conversationId: string,
         conversation:  {
           __typename: "Conversation",
           // A unique identifier for the Conversation.

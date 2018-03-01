@@ -5,8 +5,11 @@ import getAllUsers from '../graphql/queries/getAllUsers';
 import createConversation from '../graphql/mutations/createConversation';
 import createUserConversations from '../graphql/mutations/createUserConversations';
 import getUserConversationsConnection from '../graphql/queries/getUserConversationsConnection';
-import { constants } from '../chat-helper';
+import subscribeToNewUserUsers from '../graphql/subscriptions/subscribeToNewUsers';
+import { constants, addConversation, addUser } from '../chat-helper';
 import Conversation from '../types/conversation';
+import { getAllUsersQuery as UsersQuery } from '../graphql/operation-result-types';
+
 import * as _ from 'lodash';
 import { v4 as uuid } from 'uuid';
 
@@ -38,17 +41,26 @@ export class ChatUserListComponent {
 
   getAllUsers() {
     this.appsync.hc().then(client => {
-      client.watchQuery({
+      const observable = client.watchQuery({
         query: getAllUsers,
-        fetchPolicy: 'cache-and-network',
-        ssr: false
-      }).subscribe(({data}) => {
+        fetchPolicy: 'cache-and-network'
+      });
+
+      observable.subscribe(({data}) => {
         if (!data) {
           return console.log('getAllUsers - no data');
         }
         this.users = _(data.allUser).sortBy('username').reject(['id', this._user.id]).value();
         console.log('getAllUsers - Got data', this.users);
         this.no_user = (this.users.length === 0);
+      });
+
+      observable.subscribeToMore({
+        document: subscribeToNewUserUsers,
+        updateQuery: (prev: UsersQuery, {subscriptionData: {data: {subscribeToNewUsers: user }}}) => {
+          console.log('updateQuery on convo subscription', user, prev);
+          return this._user.id === user.id ? prev : addUser(prev, user);
+        }
       });
     });
   }
@@ -91,15 +103,23 @@ export class ChatUserListComponent {
 }
 
 function createUserConvo(client, id, convoId, update = false): Promise<any> {
-  const mutationOptions = {
+  const options = {
     mutation: createUserConversations,
-    variables: { 'userId': id, 'conversationId': convoId }
+    variables: { 'userId': id, 'conversationId': convoId },
+    ...(!update ? {} : { update(proxy, {data: { createUserConversations: userConvo }}) {
+      console.log('createUserConvo - update fn:', userConvo);
+
+      const _options = {
+        query: getUserConversationsConnection,
+        variables: { first: constants.conversationFirst}
+      };
+
+      const prev = proxy.readQuery(_options);
+      // console.log('retrieve ucs:', prev);
+      const data =  addConversation(prev, userConvo);
+      // console.log('inserted uc in data', JSON.stringify(data, null, 2));
+      proxy.writeQuery({..._options, data});
+    }})
   };
-  if (update) {
-    mutationOptions['refetchQueries'] = [{
-      query: getUserConversationsConnection,
-      variables: { first: constants.conversationFirst }
-    }];
-  }
-  return client.mutate(mutationOptions);
+  return client.mutate(options);
 }

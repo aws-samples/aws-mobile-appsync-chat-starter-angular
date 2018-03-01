@@ -64,6 +64,10 @@ type Subscription {
   #  Subscribes to all new messages in a given Conversation.
   subscribeToNewMessage(conversationId: ID!): Message
     @aws_subscribe(mutations:["createMessage"])
+  subscribeToNewUCs(userId:ID!): UserConversations
+		@aws_subscribe(mutations: ["createUserConversations"])
+  subscribeToNewUsers: User
+		@aws_subscribe(mutations: ["createUser"])
 }
 
 type User {
@@ -77,6 +81,8 @@ type User {
   messages(after: String, first: Int): MessageConnection
   #  The username
   username: String!
+  # is the user registered?
+	registered: Boolean
 }
 
 type UserConversations {
