@@ -17,7 +17,7 @@
         <div class="left-pane bg">
 
           <div class="text-center mb-2">
-            <span class="badge badge-pill" [class.badge-success]="me?.registered" [class.badge-warning]="!me || !me.registered">{{me?.username}}</span>
+            <h4><span class="badge badge-pill" [class.badge-dark]="me?.registered" [class.badge-light]="!me || !me.registered">{{me?.username}}</span></h4>
           </div>
           <app-chat-user-list [user]="me" (onNewConvo)="setNewConvo($event)" pageScroll href="#chat"></app-chat-user-list>
           <app-chat-convo-list [user]="me" [current]="conversation" (onConvoClick)="setNewConvo($event)" pageScroll href="#chat"></app-chat-convo-list>
@@ -37,6 +37,6 @@
 
 <ng-template #instructions>
   <div class= "bg rounded p-2 border border-dark rounded text-center instructions">
-    <p class= "p-5 m-5 h5 text-white instructions-text">Welcome, <strong>{{username}}</strong>! Select a User or a Conversation to start or continue a ChatQL</p>
+    <p class= "p-5 m-5 h5 text-white instructions-text">Welcome, <strong>{{me.username}}</strong>! Select a User or a Conversation to start or continue a ChatQL</p>
   </div>
 </ng-template>
