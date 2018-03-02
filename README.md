@@ -109,6 +109,8 @@ Both modules make use of AWS Amplify, which is initialized with the `./src/aws-e
 
 In the chat, a user can see a list of other users who have registered after sign in to the app for the first time. A user can click on a name to initiate a new conversation (`./src/app/chat-app/chat-user-list`) or can click on an existing conversation to resume it (`./src/app/chat-app/chat-convo-list`). Inside of a conversation, a user automatically receives new messages via subscriptions (`./src/app/chat-app/chat-message-view/`). When a user sends a message, the message is initially displayed with a grey check mark. This indicates that receipt confirmation from the backend server has not been received. The checkmark turns green upon confirmation the message was received by the backend. This is easily implemented by including the `isSent` flag, set to false, when we send the `createMessage` mutation. In the mutation, we request for the `isSent` flag to be returned from the backend. The flag is set to true on the backend and when returned, our template updates the css class associated with the checkmark (see `./src/src/app/chat-app/chat-message`).
 
+![Application Overview](/media/chatql-app.png)
+
 ### AWS Pinpoint Analytics
 
 1. The `./src/aws-exports.js` file also provides the Amazon Pinpoint project details to start collecting analytics data from the chat activity in the application. AWS Amplify is configured to send custom events to Pinpoint when a conversation is created  (`/src/app/chat-user-list/chat-user-list.component.ts`) and when a message is sent (`/src/app/chat-input/chat-input.component.ts`).
