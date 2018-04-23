@@ -117,6 +117,50 @@ Resources:
         UserPoolId: !Ref userPoolId
         AwsRegion: !Ref "AWS::Region"
         DefaultAction: "ALLOW"
+  conversationsTableDataSource:
+    Type: "AWS::AppSync::DataSource"
+    Properties:
+      ApiId: !GetAtt chatQLApi.ApiId
+      Name: "conversationsTableDataSource"
+      Description: "conversationsTable DynamoDB data source"
+      Type: "AMAZON_DYNAMODB"
+      ServiceRoleArn: !GetAtt awsAppSyncServiceRole.Arn
+      DynamoDBConfig:
+        TableName: !Ref conversationsTable
+        AwsRegion: !Ref "AWS::Region"
+  messagesTableDataSource:
+    Type: "AWS::AppSync::DataSource"
+    Properties:
+      ApiId: !GetAtt chatQLApi.ApiId
+      Name: "messagesTableDataSource"
+      Description: "messagesTable DynamoDB data source"
+      Type: "AMAZON_DYNAMODB"
+      ServiceRoleArn: !GetAtt awsAppSyncServiceRole.Arn
+      DynamoDBConfig:
+        TableName: !Ref messagesTable
+        AwsRegion: !Ref "AWS::Region"
+  userConversationsTableDataSource:
+    Type: "AWS::AppSync::DataSource"
+    Properties:
+      ApiId: !GetAtt chatQLApi.ApiId
+      Name: "userConversationsTableDataSource"
+      Description: "userConversationsTable DynamoDB data source"
+      Type: "AMAZON_DYNAMODB"
+      ServiceRoleArn: !GetAtt awsAppSyncServiceRole.Arn
+      DynamoDBConfig:
+        TableName: !Ref userConversationsTable
+        AwsRegion: !Ref "AWS::Region"
+  usersTableDataSource:
+    Type: "AWS::AppSync::DataSource"
+    Properties:
+      ApiId: !GetAtt chatQLApi.ApiId
+      Name: "usersTableDataSource"
+      Description: "usersTable DynamoDB data source"
+      Type: "AMAZON_DYNAMODB"
+      ServiceRoleArn: !GetAtt awsAppSyncServiceRole.Arn
+      DynamoDBConfig:
+        TableName: !Ref usersTable
+        AwsRegion: !Ref "AWS::Region"
   chatQLSchema:
     Type: "AWS::AppSync::GraphQLSchema"
     Properties:
