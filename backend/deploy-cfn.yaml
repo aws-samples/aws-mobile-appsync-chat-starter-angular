@@ -107,7 +107,12 @@ Resources:
               -
                 Effect: "Allow"
                 Action: "dynamodb:*"
-                Resource: !Sub '[${conversationsTable.Arn}, ${messagesTable.Arn}, ${userConversationsTable.Arn}, ${usersTable.Arn}]'
+                Resource:
+                  - !GetAtt conversationsTable.Arn
+                  - !GetAtt messagesTable.Arn
+                  - !GetAtt userConversationsTable.Arn
+                  - !GetAtt usersTable.Arn
+                  - !Sub '${userConversationsTable.Arn}/index/conversationId-index'
   chatQLApi:
     Type: "AWS::AppSync::GraphQLApi"
     Properties:
