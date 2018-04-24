@@ -77,13 +77,23 @@ This is a Starter Angular Progressive Web Application (PWA) that uses AWS AppSyn
 
     This deploys User Sign-In, Analytics and Hosting features, and downloads your project's `aws-exports.js` file to the `./src` folder.
 
-1. Run the following command and provide your account number:
+1. In `./src/aws-exports.js`, look up the ID of the Cognito User Pool that was created
 
     ```bash
-    $ ./backend/setup.sh
+    $ grep aws_user_pools_id src/aws-exports.js
     ```
 
-    The script will create an IAM Service Role, DynamoDB tables, an AppSync API, a GraphQL schema, Data Sources, and Resolvers. Make note of the AppSync API ID.
+    Then deploy the included Cloudformation template to launch a stack that will create an IAM Service Role, DynamoDB tables, an AppSync API, a GraphQL schema, Data Sources, and Resolvers.
+
+    ```bash
+    $ aws cloudformation create-stack --stack-name ChatQL --template-body file://backend/deploy-cfn.yml --parameters ParameterKey=userPoolId,ParameterValue=<AWS_USER_POOLS_ID> --capabilities CAPABILITY_IAM --region <YOUR_REGION>
+    ```
+
+    When the stack is done deploying, you can view its output. Make note of the AppSync API ID.
+
+    ```bash
+    aws cloudformation describe-stacks --stack-name ChatQL --query Stacks[0].Outputs --region <YOUR_REGION>
+    ```
 
 1. Point your browser to the [AWS AppSync Console](https://console.aws.amazon.com/appsync/home) (keeping mind of the region), and select the API (named 'ChatQL') created in the previous step. Scroll down to the **Integrate your GraphQL API** section,  select **Web** and *download the AWS AppSync.js config file*. Place the `AppSync.js` file in your project's `./src` directory.
 

@@ -3,6 +3,10 @@ Parameters:
   userPoolId:
     Type: String
     Description: User Pool ID associated with this project
+Outputs:
+  ChatQLApiId:
+    Description: Unique AWS AppSync GraphQL API Identifier
+    Value: !GetAtt chatQLApi.ApiId
 Resources:
   conversationsTable:
     Type: "AWS::DynamoDB::Table"
