@@ -43,7 +43,7 @@ This is a Starter Angular Progressive Web Application (PWA) that uses AWS AppSyn
 
 #### Prerequisites
 
-* [AWS Account](https://aws.amazon.com/mobile/details) with appropriate permissions to create the related resources 
+* [AWS Account](https://aws.amazon.com/mobile/details) with appropriate permissions to create the related resources
 * [NodeJS](https://nodejs.org/en/download/) with [NPM](https://docs.npmjs.com/getting-started/installing-node)
 * [AWS CLI](http://docs.aws.amazon.com/cli/latest/userguide/installing.html)
 * [AWS Mobile CLI](https://github.com/aws/awsmobile-cli) (configured for a region where [AWS AppSync is available](https://docs.aws.amazon.com/general/latest/gr/rande.html#appsync_region))
@@ -154,8 +154,8 @@ In the chat, a user can see a list of other users who have registered after sign
 
 ## Clean Up
 
-In your project folder, execute the following command to teardown the resources deployed by the `setup.sh` script. Provide your account number and the ID of your AWS AppSync GraphQL API. This will DELETE all the ChatQL resources in your account.
+To clean up the project, you can simply delete the stack you created.
 
 ```bash
-$ ./backend/teardown.sh
+$ aws cloudformation delete-stack --stack-name ChatQL --region <YOUR_REGION>
 ```
