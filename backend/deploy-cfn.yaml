@@ -265,3 +265,305 @@ Resources:
           nextToken: String
           userConversations: [UserConversations]
         }
+  createConversationMutationResolver:
+    Type: "AWS::AppSync::Resolver"
+    Properties:
+      ApiId: !GetAtt chatQLApi.ApiId
+      TypeName: "Mutation"
+      FieldName: "createConversation"
+      DataSourceName: !GetAtt conversationsTableDataSource.Name
+      RequestMappingTemplate: |
+        {
+          "version" : "2017-02-28",
+          "operation" : "PutItem",
+          "key": {
+              "id": { "S" : "${context.arguments.id}"}
+          },
+          "attributeValues" : {
+             "id": {  "S": "${context.arguments.id}" },
+             "name": {  "S": "${context.arguments.name}" }
+             #if(${context.arguments.createdAt}) ,"createdAt": { "S": "${context.arguments.createdAt}"} #end
+          }
+        }
+      ResponseMappingTemplate: |
+        $utils.toJson($context.result)
+  createMessageMutationResolver:
+    Type: "AWS::AppSync::Resolver"
+    Properties:
+      ApiId: !GetAtt chatQLApi.ApiId
+      TypeName: "Mutation"
+      FieldName: "createMessage"
+      DataSourceName: !GetAtt messagesTableDataSource.Name
+      RequestMappingTemplate: |
+        {
+          "version" : "2017-02-28",
+          "operation" : "PutItem",
+          "key" : {
+              "conversationId" : { "S" : "${context.arguments.conversationId}" }
+          },
+          "attributeValues" : {
+              "conversationId": {  "S": "${context.arguments.conversationId}" },
+              "content": {  "S": "${context.arguments.content}" },
+              "createdAt": {  "S": "${context.arguments.createdAt}" },
+              "sender": {  "S": "${context.identity.sub}" },
+              "isSent": {  "BOOL": true },
+              "id": { "S": "${context.arguments.id}" }
+          }
+        }
+      ResponseMappingTemplate: |
+        $utils.toJson($context.result)
+  createUserConversationsMutationResolver:
+    Type: "AWS::AppSync::Resolver"
+    Properties:
+      ApiId: !GetAtt chatQLApi.ApiId
+      TypeName: "Mutation"
+      FieldName: "createUserConversations"
+      DataSourceName: !GetAtt userConversationsTableDataSource.Name
+      RequestMappingTemplate: |
+        {
+          "version" : "2017-02-28",
+          "operation" : "PutItem",
+          "key": {
+              "userId": { "S" : "${context.arguments.userId}"},
+              "conversationId": { "S" : "${context.arguments.conversationId}"}
+          },
+          "attributeValues" : {
+              "userId": {  "S": "${context.arguments.userId}" },
+              "conversationId": {  "S": "${context.arguments.conversationId}" }
+          }
+        }
+      ResponseMappingTemplate: |
+        $utils.toJson($context.result)
+  createUserMutationResolver:
+    Type: "AWS::AppSync::Resolver"
+    Properties:
+      ApiId: !GetAtt chatQLApi.ApiId
+      TypeName: "Mutation"
+      FieldName: "createUser"
+      DataSourceName: !GetAtt usersTableDataSource.Name
+      RequestMappingTemplate: |
+        {
+          "version" : "2017-02-28",
+          "operation" : "PutItem",
+          "key": {
+              "cognitoId": { "S" : "${context.identity.sub}"}
+          },
+          "attributeValues" : {
+              "cognitoId": {  "S": "${context.identity.sub}" },
+              "username": {  "S": "${context.arguments.username}" },
+              "id": {  "S": "${context.identity.sub}" },
+              "registered": {  "BOOL": true }
+          }
+        }
+      ResponseMappingTemplate: |
+        $utils.toJson($context.result)
+  conversationUserConversationsResolver:
+    Type: "AWS::AppSync::Resolver"
+    Properties:
+      ApiId: !GetAtt chatQLApi.ApiId
+      TypeName: "UserConversations"
+      FieldName: "conversation"
+      DataSourceName: !GetAtt conversationsTableDataSource.Name
+      RequestMappingTemplate: |
+        {
+          "version" : "2017-02-28",
+          "operation" : "GetItem",
+          "key" : {
+              "id" : { "S" : "${context.source.conversationId}" }
+          }
+        }
+      ResponseMappingTemplate: |
+        $utils.toJson($context.result)
+  meQueryResolver:
+    Type: "AWS::AppSync::Resolver"
+    Properties:
+      ApiId: !GetAtt chatQLApi.ApiId
+      TypeName: "Query"
+      FieldName: "me"
+      DataSourceName: !GetAtt usersTableDataSource.Name
+      RequestMappingTemplate: |
+        {
+          "version" : "2017-02-28",
+          "operation" : "GetItem",
+          "key": {
+              "cognitoId": { "S" : "${context.identity.sub}"}
+          }
+        }
+      ResponseMappingTemplate: |
+        $utils.toJson($context.result)
+  allMessageConnectionQueryResolver:
+    Type: "AWS::AppSync::Resolver"
+    Properties:
+      ApiId: !GetAtt chatQLApi.ApiId
+      TypeName: "Query"
+      FieldName: "allMessageConnection"
+      DataSourceName: !GetAtt messagesTableDataSource.Name
+      RequestMappingTemplate: |
+        {
+          "version" : "2017-02-28",
+          "operation" : "Query",
+          "query" : {
+              "expression": "conversationId = :conversationId",
+              "expressionValues" : {
+                  ":conversationId" : {
+                      "S" : "${context.arguments.conversationId}"
+                  }
+              }
+          },
+          "scanIndexForward": false,
+          "limit": #if(${context.arguments.first}) ${context.arguments.first} #else 20 #end,
+          "nextToken": #if(${context.arguments.after}) "${context.arguments.after}" #else null #end
+        }
+      ResponseMappingTemplate: |
+        {
+          "messages": $utils.toJson($context.result.items),
+          "nextToken": #if(${context.result.nextToken}) "${context.result.nextToken}" #else null #end
+        }
+  associatedUserConversationsResolver:
+    Type: "AWS::AppSync::Resolver"
+    Properties:
+      ApiId: !GetAtt chatQLApi.ApiId
+      TypeName: "UserConversations"
+      FieldName: "associated"
+      DataSourceName: !GetAtt userConversationsTableDataSource.Name
+      RequestMappingTemplate: |
+        {
+          "version" : "2017-02-28",
+          "operation" : "Query",
+          "query" : {
+              "expression": "conversationId = :conversationId",
+              "expressionValues" : {
+                  ":conversationId" : {
+                      "S" : "${context.source.conversationId}"
+                  }
+              }
+          },
+          "index": "conversationId-index"
+        }
+      ResponseMappingTemplate: |
+        $util.toJson($context.result.items)
+  messagesUserResolver:
+    Type: "AWS::AppSync::Resolver"
+    Properties:
+      ApiId: !GetAtt chatQLApi.ApiId
+      TypeName: "User"
+      FieldName: "messages"
+      DataSourceName: !GetAtt messagesTableDataSource.Name
+      RequestMappingTemplate: |
+        {
+          "version" : "2017-02-28",
+          "operation" : "Query",
+          "query" : {
+              "expression": "sender = :id",
+              "expressionValues" : {
+                  ":id" : {
+                      "S" : "${context.source.cognitoId}"
+                  }
+              }
+          },
+          "index": "sender-conversationId-index",
+          "scanIndexForward": false,
+          "limit": #if(${context.arguments.first}) ${context.arguments.first} #else 20 #end,
+          "nextToken": #if(${context.arguments.after}) "${context.arguments.after}" #else null #end
+        }
+      ResponseMappingTemplate: |
+        {
+          "messages": $utils.toJson($context.result.items),
+          "nextToken": #if(${context.result.nextToken}) "${context.result.nextToken}" #else null #end
+        }
+  conversationsUserResolver:
+    Type: "AWS::AppSync::Resolver"
+    Properties:
+      ApiId: !GetAtt chatQLApi.ApiId
+      TypeName: "User"
+      FieldName: "conversations"
+      DataSourceName: !GetAtt userConversationsTableDataSource.Name
+      RequestMappingTemplate: |
+        {
+          "version" : "2017-02-28",
+          "operation" : "Query",
+          "query" : {
+              "expression": "userId = :userId",
+              "expressionValues" : {
+                  ":userId" : {
+                      "S" : "${context.source.cognitoId}"
+                  }
+              }
+          },
+          "scanIndexForward": false,
+          "limit": #if(${context.arguments.first}) ${context.arguments.first} #else 20 #end,
+          "nextToken": #if(${context.arguments.after}) "${context.arguments.after}" #else null #end
+        }
+      ResponseMappingTemplate: |
+        {
+          "userConversations": $utils.toJson($context.result.items),
+          "nextToken": #if(${context.result.nextToken}) "${context.result.nextToken}" #else null #end
+        }
+  allUserQueryResolver:
+    Type: "AWS::AppSync::Resolver"
+    Properties:
+      ApiId: !GetAtt chatQLApi.ApiId
+      TypeName: "Query"
+      FieldName: "allUser"
+      DataSourceName: !GetAtt usersTableDataSource.Name
+      RequestMappingTemplate: |
+        {
+          "version" : "2017-02-28",
+          "operation" : "Scan",
+          "limit": #if(${context.arguments.first}) "${context.arguments.first}" #else 20 #end,
+          "nextToken": #if(${context.arguments.after}) "${context.arguments.after}" #else null #end
+        }
+      ResponseMappingTemplate: |
+        $utils.toJson($context.result.items)
+  allMessageQueryResolver:
+    Type: "AWS::AppSync::Resolver"
+    Properties:
+      ApiId: !GetAtt chatQLApi.ApiId
+      TypeName: "Query"
+      FieldName: "allMessage"
+      DataSourceName: !GetAtt messagesTableDataSource.Name
+      RequestMappingTemplate: |
+        {
+          "version" : "2017-02-28",
+          "operation" : "Query",
+          "query" : {
+              "expression": "conversationId = :id",
+              "expressionValues" : {
+                  ":id" : {
+                      "S" : "${context.arguments.conversationId}"
+                  }
+              }
+          },
+          "limit": #if(${context.arguments.first}) ${context.arguments.first} #else 20 #end,
+          "nextToken": #if(${context.arguments.after}) "${context.arguments.after}" #else null #end
+        }
+      ResponseMappingTemplate: |
+        $utils.toJson($context.result.items)
+  allMessageFromQueryResolver:
+    Type: "AWS::AppSync::Resolver"
+    Properties:
+      ApiId: !GetAtt chatQLApi.ApiId
+      TypeName: "Query"
+      FieldName: "allMessageFrom"
+      DataSourceName: !GetAtt messagesTableDataSource.Name
+      RequestMappingTemplate: |
+        {
+          "version" : "2017-02-28",
+          "operation" : "Query",
+          "query" : {
+              "expression": "conversationId = :id and sender = :sender",
+              "expressionValues" : {
+                  ":id" : {
+                      "S" : "${context.arguments.conversationId}"
+                  },
+                  ":sender" : {
+                      "S" : "${context.arguments.sender}"
+                  }
+              }
+          },
+          "index" : "sender",
+          "limit": #if(${context.arguments.first}) ${context.arguments.first} #else 20 #end,
+          "nextToken": #if(${context.arguments.after}) "${context.arguments.after}" #else null #end
+        }
+      ResponseMappingTemplate: |
+        $utils.toJson($context.result.items)
