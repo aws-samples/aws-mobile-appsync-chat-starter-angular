@@ -4,14 +4,8 @@
     <strong>ChatQL</strong>
   </a>
   <ul class="nav navbar-nav">
-    <li *ngIf="isLoggedIn; else signinBlock" class="nav-item">
-        <a class="btn btn-primary" routerLink="/signout">Sign Out <i class="ion-log-out" data-pack="default" data-tags="sign in"></i></a>
+    <li *ngIf="isLoggedIn" class="nav-item">
+        <button class="btn btn-primary" (click)="signOut()">Sign Out <i class="ion-log-in" data-pack="default" data-tags="sign in"></i></button>
     </li>
-
-    <ng-template #signinBlock>
-      <li class="nav-item">
-        <a class="btn btn-primary" routerLink="/chat">Connect <i class="ion-log-in" data-pack="default" data-tags="sign in"></i></a>
-      </li>
-    </ng-template>
   </ul>
 </nav>

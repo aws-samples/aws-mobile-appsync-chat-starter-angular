@@ -1,21 +1,120 @@
 .chatql-image {
-    min-width: 100%;
-    width: auto;
-    height: auto;
+  min-width: 100%;
+  width: auto;
+  height: auto;
 }
 
 .container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .vertical-center {
-    min-height: 80%;
-    min-height: 80vh;
+  min-height: 80%;
+  min-height: 80vh;
 }
 
 .appsync{
-    height: 65px;
+  height: 65px;
 }
 
+.home {
+  margin-bottom: 50px;
+}
+
+.amplify-authenticator {
+  /* width: 400px; */
+  padding: 1em;
+  margin: 0 auto;
+}
+
+.amplify-form-input {
+  display: block;
+  width: 100%;
+  padding: .375rem .75rem;
+  font-size: 1rem;
+  line-height: 1.5;
+  color: #495057;
+  background-color: #fff;
+  background-clip: padding-box;
+  border: 1px solid #ced4da;
+  border-radius: .25rem;
+  transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+}
+
+.amplify-form-body {
+  padding: 1.5em;
+}
+
+.amplify-form-row {
+  display: 'flex';
+  margin-bottom: 1rem;
+}
+
+.amplify-form-cell-left {
+  float: left;
+  margin: 8px 0 8px 8px;
+}
+
+.amplify-form-cell-right {
+  float:right;
+  margin: 8px 8px 8px 0;
+}
+
+.amplify-form-link {
+  cursor: pointer;
+  font-weight: 400;
+  color: #007bff !important;
+  background-color: transparent;
+}
+
+.amplify-form-link:hover {
+  color: #0056b3;
+  text-decoration: underline;
+  background-color: transparent;
+  border-color: transparent;
+}
+
+.amplify-form-button {
+  color: #fff;
+  background-color: #007bff;
+  border-color: #007bff;
+
+  display: inline-block;
+  font-weight: 400;
+  text-align: center;
+  white-space: nowrap;
+  vertical-align: middle;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  border: 1px solid transparent;
+  padding: .375rem .75rem;
+  font-size: 1rem;
+  line-height: 1.5;
+  border-radius: .25rem;
+  transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+}
+
+.amplify-form-button:hover {
+  color: #fff;
+  background-color: #0069d9;
+  border-color: #0062cc;
+}
+
+.amplify-greeting-sign-out {}
+
+  .amplify-footer {
+    clear: both;
+  }
+
+  .amplify-form-message-error {
+    margin: 0.5em 0 0.5em 2em;
+    clear: both;
+    width: 100%;
+    margin-top: .25rem;
+    font-size: 80%;
+    color: #dc3545;
+  }

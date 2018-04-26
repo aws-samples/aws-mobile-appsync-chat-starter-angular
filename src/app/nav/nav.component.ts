@@ -1,26 +1,27 @@
 import { Component } from '@angular/core';
-import { Observable } from 'rxjs/Observable';
-import { Auth } from 'aws-amplify';
-import { Router, NavigationEnd } from '@angular/router';
-import 'rxjs/add/operator/filter';
+import { Router } from '@angular/router';
+import { AmplifyService } from 'aws-amplify-angular';
 
 @Component({
   selector: 'app-nav',
-  templateUrl: './nav.component.html',
-  styleUrls: ['./nav.component.css']
+  templateUrl: './nav.component.html'
 })
 export class NavComponent {
-
   isLoggedIn = false;
-  constructor(private router: Router) {
-    this.checkStatus();
-    router.events
-      .filter(e => e instanceof NavigationEnd)
-      .subscribe(e => this.checkStatus());
+
+  constructor(private amplifyService: AmplifyService, public router: Router) {
+    this.amplifyService.authStateChange$.subscribe(authState => {
+      const isLoggedIn = authState.state === 'signedIn' || authState.state === 'confirmSignIn';
+      if (this.isLoggedIn && !isLoggedIn) {
+        router.navigate(['']);
+      } else if (!this.isLoggedIn && isLoggedIn) {
+        router.navigate(['/chat']);
+      }
+      this.isLoggedIn = isLoggedIn;
+    });
   }
 
-  private checkStatus() {
-    Auth.currentSession()
-    .then(session => this.isLoggedIn = true)
-    .catch(err => this.isLoggedIn = false);  }
+  public signOut() {
+    this.amplifyService.auth().signOut();
   }
+}
