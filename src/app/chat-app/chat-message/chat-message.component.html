@@ -10,7 +10,7 @@
     {{user?.username}}
   </h6>
   <div class='float-right'>
-    <small class="card-subtitle mb-0 text-muted">{{message.createdAt | momentAgo }}</small>
+    <small class="card-subtitle mb-0 text-muted">{{createdAt | momentAgo }}</small>
     &nbsp;
     <i class="ion-checkmark" [class.text-muted]="!message.isSent" [class.text-info]="message.isSent" data-pack="default" data-tags="talk"></i>
   </div>
