@@ -7,6 +7,9 @@ Outputs:
   ChatQLApiId:
     Description: Unique AWS AppSync GraphQL API Identifier
     Value: !GetAtt chatQLApi.ApiId
+  ChatQLApiUrl:
+    Description: The Endpoint URL of your GraphQL API.
+    Value: !GetAtt chatQLApi.GraphQLUrl
 Resources:
   conversationsTable:
     Type: "AWS::DynamoDB::Table"
@@ -102,21 +105,25 @@ Resources:
             Action:
               - "sts:AssumeRole"
       Path: "/"
-      Policies:
+  dynamodbAccessPolicy:
+    Type: "AWS::IAM::Policy"
+    Properties:
+      PolicyName: "dynamodb-access"
+      PolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+          -
+            Effect: "Allow"
+            Action: "dynamodb:*"
+            Resource:
+              - !GetAtt conversationsTable.Arn
+              - !GetAtt messagesTable.Arn
+              - !GetAtt userConversationsTable.Arn
+              - !GetAtt usersTable.Arn
+              - !Sub '${userConversationsTable.Arn}/index/conversationId-index'
+      Roles:
         -
-          PolicyName: "dynamodb-access"
-          PolicyDocument:
-            Version: "2012-10-17"
-            Statement:
-              -
-                Effect: "Allow"
-                Action: "dynamodb:*"
-                Resource:
-                  - !GetAtt conversationsTable.Arn
-                  - !GetAtt messagesTable.Arn
-                  - !GetAtt userConversationsTable.Arn
-                  - !GetAtt usersTable.Arn
-                  - !Sub '${userConversationsTable.Arn}/index/conversationId-index'
+          Ref: "awsAppSyncServiceRole"
   chatQLApi:
     Type: "AWS::AppSync::GraphQLApi"
     Properties:

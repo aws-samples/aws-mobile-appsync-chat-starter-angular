@@ -89,7 +89,7 @@ This is a Starter Angular Progressive Web Application (PWA) that uses AWS AppSyn
     $ aws cloudformation create-stack --stack-name ChatQL --template-body file://backend/deploy-cfn.yml --parameters ParameterKey=userPoolId,ParameterValue=<AWS_USER_POOLS_ID> --capabilities CAPABILITY_IAM --region <YOUR_REGION>
     ```
 
-    When the stack is done deploying, you can view its output. Make note of the AppSync API ID.
+    When the stack is done deploying, you can view its output. Make note of the GraphQL API Identifier 'ChatQLApiId'.
 
     ```bash
     aws cloudformation describe-stacks --stack-name ChatQL --query Stacks[0].Outputs --region <YOUR_REGION>
