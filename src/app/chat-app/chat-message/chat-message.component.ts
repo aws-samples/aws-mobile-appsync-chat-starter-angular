@@ -1,4 +1,4 @@
-import { Component, Input, Output, EventEmitter, AfterViewInit, OnInit} from '@angular/core';
+import { Component, Input, Output, EventEmitter, AfterViewInit, OnInit, OnChanges, SimpleChanges } from '@angular/core';
 import { AppsyncService } from '../appsync.service';
 import Message from '../types/message';
 import readUserFragment from '../graphql/queries/readUserFragment';
@@ -11,7 +11,7 @@ const USER_ID_PREFIX = 'User:';
   templateUrl: './chat-message.component.html',
   styleUrls: ['./chat-message.component.css']
 })
-export class ChatMessageComponent implements AfterViewInit, OnInit {
+export class ChatMessageComponent implements AfterViewInit, OnInit, OnChanges {
 
   @Input() message: Message;
   @Input() fromMe: boolean;
@@ -20,6 +20,7 @@ export class ChatMessageComponent implements AfterViewInit, OnInit {
   @Output() added: EventEmitter<Message> = new EventEmitter();
 
   user: User;
+  createdAt;
 
   constructor(private appsync: AppsyncService) {}
 
@@ -30,6 +31,15 @@ export class ChatMessageComponent implements AfterViewInit, OnInit {
         fragment: readUserFragment
       });
     });
+  }
+
+  ngOnChanges(changes: SimpleChanges) {
+    for (let propName in changes) {
+      if (propName === 'message') {
+        const chng = changes[propName];
+        this.createdAt = chng.currentValue.createdAt.split('_')[0];
+      }
+    }
   }
 
   ngAfterViewInit() {

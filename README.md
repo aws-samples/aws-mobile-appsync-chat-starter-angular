@@ -43,7 +43,7 @@ This is a Starter Angular Progressive Web Application (PWA) that uses AWS AppSyn
 
 #### Prerequisites
 
-* [AWS Account](https://aws.amazon.com/mobile/details) with appropriate permissions to create the related resources 
+* [AWS Account](https://aws.amazon.com/mobile/details) with appropriate permissions to create the related resources
 * [NodeJS](https://nodejs.org/en/download/) with [NPM](https://docs.npmjs.com/getting-started/installing-node)
 * [AWS CLI](http://docs.aws.amazon.com/cli/latest/userguide/installing.html)
 * [AWS Mobile CLI](https://github.com/aws/awsmobile-cli) (configured for a region where [AWS AppSync is available](https://docs.aws.amazon.com/general/latest/gr/rande.html#appsync_region))
@@ -77,13 +77,23 @@ This is a Starter Angular Progressive Web Application (PWA) that uses AWS AppSyn
 
     This deploys User Sign-In, Analytics and Hosting features, and downloads your project's `aws-exports.js` file to the `./src` folder.
 
-1. Run the following command and provide your account number:
+1. In `./src/aws-exports.js`, look up the ID of the Cognito User Pool that was created
 
     ```bash
-    $ ./backend/setup.sh
+    $ grep aws_user_pools_id src/aws-exports.js
     ```
 
-    The script will create an IAM Service Role, DynamoDB tables, an AppSync API, a GraphQL schema, Data Sources, and Resolvers. Make note of the AppSync API ID.
+    Then deploy the included Cloudformation template to launch a stack that will create an IAM Service Role, DynamoDB tables, an AppSync API, a GraphQL schema, Data Sources, and Resolvers.
+
+    ```bash
+    $ aws cloudformation create-stack --stack-name ChatQL --template-body file://backend/deploy-cfn.yml --parameters ParameterKey=userPoolId,ParameterValue=<AWS_USER_POOLS_ID> --capabilities CAPABILITY_IAM --region <YOUR_REGION>
+    ```
+
+    When the stack is done deploying, you can view its output. Make note of the GraphQL API Identifier 'ChatQLApiId'.
+
+    ```bash
+    aws cloudformation describe-stacks --stack-name ChatQL --query Stacks[0].Outputs --region <YOUR_REGION>
+    ```
 
 1. Point your browser to the [AWS AppSync Console](https://console.aws.amazon.com/appsync/home) (keeping mind of the region), and select the API (named 'ChatQL') created in the previous step. Scroll down to the **Integrate your GraphQL API** section,  select **Web** and *download the AWS AppSync.js config file*. Place the `AppSync.js` file in your project's `./src` directory.
 
@@ -144,8 +154,8 @@ In the chat, a user can see a list of other users who have registered after sign
 
 ## Clean Up
 
-In your project folder, execute the following command to teardown the resources deployed by the `setup.sh` script. Provide your account number and the ID of your AWS AppSync GraphQL API. This will DELETE all the ChatQL resources in your account.
+To clean up the project, you can simply delete the stack you created.
 
 ```bash
-$ ./backend/teardown.sh
+$ aws cloudformation delete-stack --stack-name ChatQL --region <YOUR_REGION>
 ```

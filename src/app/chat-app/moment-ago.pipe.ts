@@ -6,9 +6,8 @@ import * as moment from 'moment';
 })
 export class MomentAgoPipe implements PipeTransform {
 
-  transform(value: any, format?: any): any {
-    format = format || 'YYYY-MM-DD';
-    const date = moment(parseInt(value)); // , format);
+  transform(value: any): any {
+    const date = moment(value);
     return date.calendar(null, {
       sameDay: 'LT',
       lastDay: 'MMM D LT',

@@ -8,7 +8,6 @@ import { NavComponent } from './nav/nav.component';
 import { FooterComponent } from './footer/footer.component';
 import { HomeComponent } from './home/home.component';
 
-import { AuthModule } from './auth/auth.module';
 import { ChatAppModule } from './chat-app/chat-app.module';
 import { RoutingModule } from './routing.module';
 
@@ -18,6 +17,7 @@ import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 
 import Amplify from 'aws-amplify';
 import aws_exports from '../aws-exports';
+import { AmplifyAngularModule, AmplifyService } from 'aws-amplify-angular';
 Amplify.configure(aws_exports);
 
 @NgModule({
@@ -29,14 +29,15 @@ Amplify.configure(aws_exports);
   ],
   imports: [
     BrowserModule,
-    AuthModule.forRoot({signInPath: '/chat'}),
     ChatAppModule.forRoot(),
     RoutingModule,
     FormsModule,
     NgbModule.forRoot(),
     ServiceWorkerModule.register('/ngsw-worker.js', { enabled: environment.production }),
+    AmplifyAngularModule
   ],
   providers: [
+    AmplifyService
   ],
   bootstrap: [AppComponent]
 })
