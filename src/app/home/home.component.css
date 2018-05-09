@@ -25,8 +25,7 @@
 
 .amplify-authenticator {
   /* width: 400px; */
-  padding: 1em;
-  margin: 0 auto;
+  margin: auto;
 }
 
 .amplify-form-input {
@@ -44,7 +43,7 @@
 }
 
 .amplify-form-body {
-  padding: 1.5em;
+  padding: 0;
 }
 
 .amplify-form-row {
