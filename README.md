@@ -45,9 +45,9 @@ This is a Starter Angular Progressive Web Application (PWA) that uses AWS AppSyn
 
 * [AWS Account](https://aws.amazon.com/mobile/details) with appropriate permissions to create the related resources
 * [NodeJS](https://nodejs.org/en/download/) with [NPM](https://docs.npmjs.com/getting-started/installing-node)
-* [AWS CLI](http://docs.aws.amazon.com/cli/latest/userguide/installing.html)
-* [AWS Mobile CLI](https://github.com/aws/awsmobile-cli) (configured for a region where [AWS AppSync is available](https://docs.aws.amazon.com/general/latest/gr/rande.html#appsync_region))
-* [Angular CLI](https://github.com/angular/angular-cli)
+* [AWS CLI](http://docs.aws.amazon.com/cli/latest/userguide/installing.html) `(pip install awscli --upgrade --user)`
+* [AWS Mobile CLI](https://github.com/aws/awsmobile-cli) (configured for a region where [AWS AppSync is available](https://docs.aws.amazon.com/general/latest/gr/rande.html#appsync_region)) `(npm install -g awsmobile-cli)`
+* [Angular CLI](https://github.com/angular/angular-cli) `(npm install -g @angular/cli)`
 
 
 ### Backend Setup
