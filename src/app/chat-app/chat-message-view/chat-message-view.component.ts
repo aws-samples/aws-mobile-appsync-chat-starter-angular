@@ -1,3 +1,5 @@
+
+import {empty as observableEmpty, from as observableFrom,  Observable } from 'rxjs';
 import { Component, Input, ElementRef, ViewChild } from '@angular/core';
 import { AppsyncService } from '../appsync.service';
 import getConversationMessages from '../graphql/queries/getConversationMessages';
@@ -10,9 +12,7 @@ import { ObservableQuery, ApolloQueryResult } from 'apollo-client';
 
 import { unshiftMessage, pushMessages, constants } from '../chat-helper';
 
-import { Observable } from 'rxjs/Observable';
-import 'rxjs/add/observable/from';
-import 'rxjs/add/observable/empty';
+
 
 const USER_ID_PREFIX = 'User:';
 
@@ -115,12 +115,12 @@ export class ChatMessageViewComponent {
       this.observedQuery = observable;
       return observable;
     });
-    return Observable.from(innerObserable);
+    return observableFrom(innerObserable);
   }
 
   loadMoreMessages(event = null) {
     if (event) { event.stopPropagation(); event.preventDefault(); }
-    if (!this.nextToken) { return Observable.empty(); }
+    if (!this.nextToken) { return observableEmpty(); }
     const result = this.observedQuery.fetchMore({
       variables : { after: this.nextToken },
       updateQuery: (prev, {fetchMoreResult} ) => {
@@ -133,6 +133,6 @@ export class ChatMessageViewComponent {
         return _res;
       }
     });
-    return Observable.from(result);
+    return observableFrom(result);
   }
 }
