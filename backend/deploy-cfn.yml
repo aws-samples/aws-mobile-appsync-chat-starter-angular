@@ -182,7 +182,7 @@ Resources:
     Properties:
       ApiId: !GetAtt chatQLApi.ApiId
       Definition: |
-        type schema {
+        schema {
           query: Query
           mutation: Mutation
           subscription: Subscription
