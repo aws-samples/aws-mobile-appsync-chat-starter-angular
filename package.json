@@ -40,7 +40,7 @@
     "cuint": "^0.2.2",
     "graphql": "^0.11.7",
     "graphql-tag": "^2.5.0",
-    "immutability-helper": "^2.6.0",
+    "immutability-helper": "2.6.0",
     "lodash": "^4.17.4",
     "moment": "^2.19.4",
     "ngx-page-scroll": "^4.0.2",
