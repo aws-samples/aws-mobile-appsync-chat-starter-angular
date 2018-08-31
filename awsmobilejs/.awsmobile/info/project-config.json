@@ -1,0 +1,6 @@
+{
+	"SourceDir": "src",
+	"DistributionDir": "dist",
+	"BuildCommand": "npm run-script build",
+	"StartCommand": "ng serve"
+}

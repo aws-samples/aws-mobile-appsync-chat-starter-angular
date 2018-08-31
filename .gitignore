@@ -43,6 +43,10 @@ testem.log
 Thumbs.db
 
 #awsmobilejs
-/awsmobilejs/*
-/src/aws-exports.js
-/src/AppSync.js
+appsync-info.json
+aws-info.json
+project-info.json
+aws-exports.*
+awsmobilejs/.awsmobile/backend-build
+awsmobilejs/\#current-backend-info
+~awsmobilejs-*/
