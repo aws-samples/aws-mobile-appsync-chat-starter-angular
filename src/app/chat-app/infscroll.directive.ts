@@ -6,7 +6,7 @@ import {
   HostListener
 } from '@angular/core'
 import { Observable, Subject } from 'rxjs'
-import { pairwise, filter } from 'rxjs/operators'
+import { pairwise, filter, exhaustMap } from 'rxjs/operators'
 
 @Directive({
   selector: '[appInfscroll]'
@@ -27,7 +27,7 @@ export class InfscrollDirective implements AfterViewInit {
   subject = new Subject<any>()
   obs = this.subject.asObservable()
   lastScrollHeight
-  constructor(private el: ElementRef) {}
+  constructor(private el: ElementRef) { }
 
   @HostListener('scroll')
   onScrollEvent() {
@@ -42,9 +42,8 @@ export class InfscrollDirective implements AfterViewInit {
   ngAfterViewInit() {
     this.scrollEvent = this.obs.pipe(
       pairwise(),
-      filter(this.isScrollingUpPastThreshold.bind(this))
-    )
-    this.scrollEvent.exhaustMap(() => this.appInfscroll()).subscribe({})
+      filter(this.isScrollingUpPastThreshold.bind(this)),
+      exhaustMap(() => this.appInfscroll())).subscribe(() => { })
   }
 
   updateScrollTop() {

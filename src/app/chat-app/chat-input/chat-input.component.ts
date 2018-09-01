@@ -3,6 +3,7 @@ import { AppsyncService } from '../appsync.service';
 import { v4 as uuid } from 'uuid';
 import createMessage from '../graphql/mutations/createMessage';
 import getConversationMessages from '../graphql/queries/getConversationMessages';
+import { getConversationMessagesQuery } from '../graphql/operation-result-types'
 import { unshiftMessage, constants } from '../chat-helper';
 import Message from '../types/message';
 import { Analytics } from 'aws-amplify';
@@ -18,7 +19,7 @@ export class ChatInputComponent {
 
   @Input() conversation: any;
   @Input() senderId: string;
-  constructor(private appsync: AppsyncService) {}
+  constructor(private appsync: AppsyncService) { }
 
   createNewMessage() {
     if (!this.message || this.message.trim().length === 0) {
@@ -32,7 +33,7 @@ export class ChatInputComponent {
       createdAt: id,
       sender: this.senderId,
       isSent: false,
-      id : id
+      id: id
     };
     console.log('new message', message);
     this.message = '';
@@ -48,18 +49,18 @@ export class ChatInputComponent {
           }
         }),
 
-        update: (proxy, {data: { createMessage: _message }}) => {
+        update: (proxy, { data: { createMessage: _message } }) => {
 
           const options = {
             query: getConversationMessages,
             variables: { conversationId: this.conversation.id, first: constants.messageFirst }
           };
 
-          const data = proxy.readQuery(options);
+          const data: getConversationMessagesQuery = proxy.readQuery(options);
           const _tmp = unshiftMessage(data, _message);
-          proxy.writeQuery({...options, data: _tmp});
+          proxy.writeQuery({ ...options, data: _tmp });
         }
-      }).then(({data}) => {
+      }).then(({ data }) => {
         console.log('mutation complete', data);
       }).catch(err => console.log('Error creating message', err));
     });
