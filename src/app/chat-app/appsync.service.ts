@@ -6,18 +6,14 @@ import { Auth } from 'aws-amplify';
 
 @Injectable()
 export class AppsyncService {
+  private client: AWSAppSyncClient<any> = new AWSAppSyncClient({
+    url: appSyncConfig.graphqlEndpoint,
+    region: appSyncConfig.region,
+    auth: {
+      type: AUTH_TYPE.AMAZON_COGNITO_USER_POOLS,
+      jwtToken: async () => (await Auth.currentSession()).getIdToken().getJwtToken()
+    }
+  });
 
-  hc;
-
-  constructor() {
-    const client = new AWSAppSyncClient({
-      url: appSyncConfig.graphqlEndpoint,
-      region: appSyncConfig.region,
-      auth: {
-        type: AUTH_TYPE.AMAZON_COGNITO_USER_POOLS,
-        jwtToken: async () => (await Auth.currentSession()).getIdToken().getJwtToken()
-      }
-    });
-    this.hc = client.hydrated;
-  }
+  hc = () => this.client.hydrated();
 }

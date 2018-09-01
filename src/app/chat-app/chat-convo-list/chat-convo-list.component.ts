@@ -34,9 +34,9 @@ export class ChatConvoListComponent implements OnInit {
   @Output()
   onConvoClick = new EventEmitter<any>()
 
-  constructor(private appsync: AppsyncService) {}
+  constructor(private appsync: AppsyncService) { }
 
-  ngOnInit() {}
+  ngOnInit() { }
 
   click(convo) {
     this.onConvoClick.emit(convo)
@@ -44,7 +44,7 @@ export class ChatConvoListComponent implements OnInit {
 
   getAllConvos() {
     this.appsync.hc().then(client => {
-      const observable: ObservableQuery<UserConvosQuery> = client.watchQuery({
+      const observable: ObservableQuery = client.watchQuery({
         query: getUserConversationsConnection,
         variables: { first: constants.conversationFirst },
         fetchPolicy: 'cache-and-network'

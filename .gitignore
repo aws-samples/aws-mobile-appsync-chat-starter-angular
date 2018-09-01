@@ -42,6 +42,9 @@ testem.log
 .DS_Store
 Thumbs.db
 
+
+/src/AppSync.js
+
 #awsmobilejs
 appsync-info.json
 aws-info.json

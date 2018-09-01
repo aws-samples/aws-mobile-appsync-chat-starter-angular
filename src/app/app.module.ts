@@ -15,10 +15,7 @@ import { environment } from '../environments/environment';
 
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 
-import Amplify from 'aws-amplify';
-import aws_exports from '../aws-exports';
 import { AmplifyAngularModule, AmplifyService } from 'aws-amplify-angular';
-Amplify.configure(aws_exports);
 
 @NgModule({
   declarations: [
