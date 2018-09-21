@@ -91,7 +91,7 @@ This is a Starter Angular Progressive Web Application (PWA) that uses AWS AppSyn
 
 1. Navigate to the AWS AppSync console using the URL: http://console.aws.amazon.com/appsync/home
 
-1. Click on **Create API** and select the **Chat App** option. Enter a API name of your choice, select the Region and the Amazon Cognito User Pool ID you retrieved from `./src/aws-exports.js`. Click **Create**.
+1. Click on **Create API**, go to **Start from a Sample Project** and select the **Chat App** option. Enter a API name of your choice, select the Region and the Amazon Cognito User Pool ID you retrieved from `./src/aws-exports.js`. Click **Create**.
 
 1. Scroll down to the **Integrate your GraphQL API** section,  select **Web** and *download the AWS AppSync.js config file*. Place the `AppSync.js` file in your project's `./src` directory.
 
