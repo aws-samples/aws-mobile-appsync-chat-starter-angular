@@ -46,7 +46,7 @@ This is a Starter Angular Progressive Web Application (PWA) that uses AWS AppSyn
 * [AWS Account](https://aws.amazon.com/mobile/details) with appropriate permissions to create the related resources
 * [NodeJS](https://nodejs.org/en/download/) with [NPM](https://docs.npmjs.com/getting-started/installing-node)
 * [AWS CLI](http://docs.aws.amazon.com/cli/latest/userguide/installing.html) `(pip install awscli --upgrade --user)`
-* [AWS Mobile CLI](https://github.com/aws/awsmobile-cli) (configured for a region where [AWS AppSync is available](https://docs.aws.amazon.com/general/latest/gr/rande.html#appsync_region)) `(npm install -g awsmobile-cli)`
+* [AWS Amplify CLI](https://github.com/aws-amplify/amplify-cli) (configured for a region where [AWS AppSync is available](https://docs.aws.amazon.com/general/latest/gr/rande.html#appsync_region)) `(npm install -g @aws-amplify/cli)`
 * [Angular CLI](https://github.com/angular/angular-cli) `(npm install -g @angular/cli)`
 
 
@@ -58,26 +58,31 @@ This is a Starter Angular Progressive Web Application (PWA) that uses AWS AppSyn
     $ cd aws-mobile-appsync-chat-starter-angular
     ```
 
-1. Set up your AWS resources in AWS Mobile Hub with the awsmobile cli:
+2. Set up your AWS resources the Amplify CLI:
     ```bash
-    $ awsmobile init
-    ```
-    Provide the following details and name the project:
-      * Source directory: `<Press ENTER to accept defaults>`
-      * Distribution directory that stores build artifacts: `dist`
-      * Build command: `ng build --prod`
-      * Start command for local test run: `<Press ENTER to accept defaults>`
-
-1. Copy the file `./backend/mobile-hub-project.yml` to `./awsmobilejs/backend/` and push the configuration change to AWS Mobile Hub.
-
-    ```bash
-    $ cp ./backend/mobile-hub-project.yml ./awsmobilejs/backend/
-    $ awsmobile push
+    $ amplify init
     ```
 
-    This deploys User Sign-In, Analytics and Hosting features, and downloads your project's `aws-exports.js` file to the `./src` folder.
+3. Install the required modules:
 
-1. In `./src/aws-exports.js`, look up the ID of the Cognito User Pool that was created
+    ```bash
+    $ npm install
+    ```
+
+4. Add authentication and analytics to the project with the default options:
+
+    ```bash
+    $ amplify add auth
+    $ amplify add analytics
+    ```
+
+4. Create the cloud resources by pushing the changes:
+
+    ```bash
+    $ amplify push
+    ```
+
+5. In `./src/aws-exports.js`, look up the ID of the Cognito User Pool that was created
 
     ```bash
     $ grep aws_user_pools_id src/aws-exports.js
@@ -91,17 +96,24 @@ This is a Starter Angular Progressive Web Application (PWA) that uses AWS AppSyn
 
 1. Navigate to the AWS AppSync console using the URL: http://console.aws.amazon.com/appsync/home
 
-1. Click on **Create API**, go to **Start from a Sample Project** and select the **Chat App** option. Enter a API name of your choice, select the Region and the Amazon Cognito User Pool ID you retrieved from `./src/aws-exports.js`. Click **Create**.
+2. Click on **Create API**, select **Create with Wizard** with the **Chat App** option. Click **Start**.
+   
+3. Enter a API name of your choice, select the Region and the Amazon Cognito User Pool ID you retrieved from `./src/aws-exports.js`. 
 
-1. Scroll down to the **Integrate your GraphQL API** section,  select **Web** and *download the AWS AppSync.js config file*. Place the `AppSync.js` file in your project's `./src` directory.
+4. After the API is deployed, in the **Getting Started** page scroll down to the **Integrate with your App** section,  select **JavaScript**, copy the full `amplify codegen` command and back to the local project folder paste and execute it:
 
     ```bash
-    $ cp <download-directory>/AppSync.js ./src/AppSync.js
+    $ amplify add codegen --apiId xxxxxxxxxxxxxx
     ```
-1. Start the application:
+5. Start the application:
 
     ```bash
-    $ awsmobile run
+    $ amplify serve
+    ```
+
+    or
+    ```bash
+    $ ng serve
     ```
 
 ### Deploy with CloudFormation
@@ -118,18 +130,23 @@ This is a Starter Angular Progressive Web Application (PWA) that uses AWS AppSyn
     aws cloudformation describe-stacks --stack-name ChatQL --query Stacks[0].Outputs --region <YOUR_REGION>
     ```
 
-1. Point your browser to the [AWS AppSync Console](https://console.aws.amazon.com/appsync/home) (keeping mind of the region), and select the API (named 'ChatQL') created in the previous step. Scroll down to the **Integrate your GraphQL API** section,  select **Web** and *download the AWS AppSync.js config file*. Place the `AppSync.js` file in your project's `./src` directory.
+1. Point your browser to the [AWS AppSync Console](https://console.aws.amazon.com/appsync/home) (keeping mind of the region), and select the API (named 'ChatQL') created in the previous step. In the **Getting Started** page scroll down to the **Integrate with your App** section,  select **JavaScript**, copy the full `amplify codegen` command and back to the local project folder paste and execute it:
 
     ```bash
-    $ cp <download-directory>/AppSync.js ./src/AppSync.js
+    $ amplify add codegen --apiId xxxxxxxxxxxxxx
     ```
 
-1. Finally, execute the following command to install your project package dependencies and run the application locally:
+2. Finally, execute the following command to install your project package dependencies and run the application locally:
       ```bash
-      $ awsmobile run
-      ```
+    $ amplify serve
+    ```
 
-1. Access your ChatQL app at http://localhost:4200. Sign up different users and test real-time/offline messaging using different browsers.
+    or
+    ```bash
+    $ ng serve
+    ```
+
+3. Access your ChatQL app at http://localhost:4200. Sign up different users and test real-time/offline messaging using different browsers.
 
 ### Application Walkthrough
 
@@ -148,37 +165,35 @@ In the chat, a user can see a list of other users who have registered after sign
 
 1. The `./src/aws-exports.js` file also provides the Amazon Pinpoint project details to start collecting analytics data from the chat activity in the application. AWS Amplify is configured to send custom events to Pinpoint when a conversation is created  (`/src/app/chat-user-list/chat-user-list.component.ts`) and when a message is sent (`/src/app/chat-input/chat-input.component.ts`).
 
-1. After a couple of minutes, use the awsmobile cli to open your project in the AWS Mobile Hub console:
-      ```bash
-      $ awsmobile console
-      ```
+1. Navigate to the Amazon Pinpoint console and select the project with the same name as your amplify project: https://console.aws.amazon.com/pinpoint/home
 
       Click on **Analytics** in the top right corner of the console to open the Amazon Pinpoint console. Click on **Analytics** on the left, then select the **Events** tab to see your application's events. Use the Event dropdown menu to see data from your custom events (`Chat MSG Sent` or `New Conversation`).
 
 ## Building, Deploying and Publishing
 
-1. Execute `awsmobile publish` from the project's root folder.
+1. Execute `amplify add hosting` from the project's root folder and follow the prompts to create a S3 bucket (DEV) and/or a CloudFront distribution (PROD).
 
-1. While the application is building/publishing, go back to the Mobile Hub console using the `awsmobile console` command. Select the **Hosting And Streaming** tile and click **Manage files**. In the Amazon S3 console, select **Properties**, and in the **Static website hosting** section, under 'Error document', specify `index.html`.
+1. Build and publish the application:
 
-1. Back in the Mobile Hub console, in **Hosting And Streaming**, click **Edit your CDN distribution**. In the Amazon CloudFront console, select **Error Pages** and click **Create Custom Error Response**. Use the following settings:
+```bash
+    $ amplify publish
+```
 
-    * HTTP Error Code: `403`
-    * Minimum TTL: `300`
-    * Customize Error Response: `Yes`
-    * Response Path: `/index.html`
-    * HTTP Response Code: `200`
+2. If you are deploying a CloudFront distribuiton, be mindful it needs to be replicated across all points of presence globally and it might take up to 15 minutes to do so.
 
-    The last two steps are necessary because of the way Angular internal [routing](https://angular.io/guide/router) works as a Single Page Application (SPA) with client-side routing.
-
-1. Wait until the CloudFront settings are replicated (Status: Deployed)
-
-1. Access your public ChatQL application using the S3 Website Endpoint URL or the CloudFront URL returned by the `awsmobile publish` command. Share the link with friends, sign up some users, and start creating conversations and exchanging messages. Be mindful PWAs require SSL, in order to test PWA functionality access the CloudFront URL (HTTPS) from a mobile device and add the site to the mobile home screen.
+3. Access your public ChatQL application using the S3 Website Endpoint URL or the CloudFront URL returned by the `amplify publish` command. Share the link with friends, sign up some users, and start creating conversations and exchanging messages. Be mindful PWAs require SSL, in order to test PWA functionality access the CloudFront URL (HTTPS) from a mobile device and add the site to the mobile home screen.
 
 ## Clean Up
 
-To clean up the project, you can simply delete the stack you created.
+To clean up the project, you can simply delete the stack you created or use the Amplify CLI, depending on how you deployed the application.
 
 ```bash
 $ aws cloudformation delete-stack --stack-name ChatQL --region <YOUR_REGION>
 ```
+
+or use:
+
+```
+$ amplify delete
+```
+

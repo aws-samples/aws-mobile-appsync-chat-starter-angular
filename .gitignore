@@ -42,7 +42,10 @@ testem.log
 .DS_Store
 Thumbs.db
 
-#awsmobilejs
-/awsmobilejs/*
+#amplify
+/amplify/*
 /src/aws-exports.js
-/src/AppSync.js
+/src/graphql
+
+package-lock.json
+.graphqlconfig.yml
