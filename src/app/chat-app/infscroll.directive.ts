@@ -1,10 +1,9 @@
 import { Directive, AfterViewInit, ElementRef, Input, HostListener } from '@angular/core';
-import { Observable } from 'rxjs/Observable';
-import { Subject } from 'rxjs/Subject';
-import 'rxjs/add/observable/fromEvent';
-import 'rxjs/add/operator/pairwise';
-import 'rxjs/add/operator/filter';
-import 'rxjs/add/operator/exhaustMap';
+import { Observable ,  Subject } from 'rxjs';
+
+
+
+
 
 @Directive({
   selector: '[appInfscroll]'
