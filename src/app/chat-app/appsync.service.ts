@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import AWSAppSyncClient from 'aws-appsync';
-import appSyncConfig from '../../AppSync.js';
+import aws_exports from '../../aws-exports';
 import { AUTH_TYPE } from 'aws-appsync/lib/link/auth-link';
 import { Auth } from 'aws-amplify';
 
@@ -11,8 +11,8 @@ export class AppsyncService {
 
   constructor() {
     const client = new AWSAppSyncClient({
-      url: appSyncConfig.graphqlEndpoint,
-      region: appSyncConfig.region,
+      url: aws_exports.aws_appsync_graphqlEndpoint,
+      region: aws_exports.aws_project_region,
       auth: {
         type: AUTH_TYPE.AMAZON_COGNITO_USER_POOLS,
         jwtToken: async () => (await Auth.currentSession()).getIdToken().getJwtToken()

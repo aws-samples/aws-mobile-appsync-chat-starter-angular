@@ -25,7 +25,7 @@ export class ChatInputComponent {
       this.message = '';
       return;
     }
-    const id = `${new Date().toISOString()}_${uuid()}`
+    const id = `${new Date().toISOString()}_${uuid()}`;
     const message: Message = {
       conversationId: this.conversation.id,
       content: this.message,
