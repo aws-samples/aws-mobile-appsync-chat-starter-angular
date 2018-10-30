@@ -16,6 +16,8 @@
       "es2017",
       "dom",
       "esnext.asynciterable"
-    ]
+    ],
+    "module": "es2015",
+    "baseUrl": "./"
   }
 }
