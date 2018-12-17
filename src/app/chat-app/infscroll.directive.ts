@@ -1,10 +1,6 @@
 import { Directive, AfterViewInit, ElementRef, Input, HostListener } from '@angular/core';
-import { Observable } from 'rxjs/Observable';
-import { Subject } from 'rxjs/Subject';
-import 'rxjs/add/observable/fromEvent';
-import 'rxjs/add/operator/pairwise';
-import 'rxjs/add/operator/filter';
-import 'rxjs/add/operator/exhaustMap';
+import { Observable, Subject } from 'rxjs';
+import { pairwise, filter, exhaustMap } from 'rxjs/operators';
 
 @Directive({
   selector: '[appInfscroll]'
@@ -35,7 +31,9 @@ export class InfscrollDirective implements AfterViewInit {
 }
 
   ngAfterViewInit() {
-    this.scrollEvent = this.obs.pairwise().filter(this.isScrollingUpPastThreshold.bind(this));
+    this.scrollEvent = this.obs.pipe(
+      pairwise(),
+      filter(this.isScrollingUpPastThreshold.bind(this)));
     this.scrollEvent.exhaustMap(() => this.appInfscroll()).subscribe({});
   }
 

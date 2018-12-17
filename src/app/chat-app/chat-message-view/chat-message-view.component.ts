@@ -10,9 +10,7 @@ import { ObservableQuery, ApolloQueryResult } from 'apollo-client';
 
 import { unshiftMessage, pushMessages, constants } from '../chat-helper';
 
-import { Observable } from 'rxjs/Observable';
-import 'rxjs/add/observable/from';
-import 'rxjs/add/observable/empty';
+import { EMPTY, from, Observable } from 'rxjs';
 
 const USER_ID_PREFIX = 'User:';
 
@@ -115,12 +113,12 @@ export class ChatMessageViewComponent {
       this.observedQuery = observable;
       return observable;
     });
-    return Observable.from(innerObserable);
+    return from(innerObserable);
   }
 
   loadMoreMessages(event = null) {
     if (event) { event.stopPropagation(); event.preventDefault(); }
-    if (!this.nextToken) { return Observable.empty(); }
+    if (!this.nextToken) { return EMPTY; }
     const result = this.observedQuery.fetchMore({
       variables : { after: this.nextToken },
       updateQuery: (prev, {fetchMoreResult} ) => {
@@ -133,6 +131,6 @@ export class ChatMessageViewComponent {
         return _res;
       }
     });
-    return Observable.from(result);
+    return from(result);
   }
 }

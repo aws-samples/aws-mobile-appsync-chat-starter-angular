@@ -24,7 +24,7 @@ export class ChatComponent implements OnInit {
 
   username: string;
   session;
-  client: AWSAppSyncClient;
+  client: AWSAppSyncClient<any>;
   me: User;
   conversation: Conversation;
   update: boolean;
