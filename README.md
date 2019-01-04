@@ -235,7 +235,7 @@ _The chatbots retrieve information online via API calls from Lambda to [The Movi
 4. Commit the changes to your forked repository. A new folder `amplify` will be commited with the project details.
 5. Connect your repository to the [Amplify Console](https://console.aws.amazon.com/amplify/home?#/create) as per the instructions [here](https://docs.aws.amazon.com/amplify/latest/userguide/getting-started.html), making sure the name of the branch in your repository matches the name of the environment configured on `amplify init` (i.e. master). When prompted with "_We detected a backend created with the Amplify Framework. Would you like Amplify Console to deploy these resources with your frontend?_", select **"YES"** and provide or create an IAM role with appropriate permissions to build the backend resources
 6. Wait for the build, deployment and verification steps
-7. Now perform steps 7 to 14 from the [Backend Setup](#backend-setup)
+7. Now perform steps 7 to 12 from the [Backend Setup](#backend-setup)
 8. Access your app (https://master.xxxxxxxx.amplifyapp.com)
 
 ## Clean Up
