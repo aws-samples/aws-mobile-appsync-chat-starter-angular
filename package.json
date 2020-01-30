@@ -44,7 +44,7 @@
     "lodash": "^4.17.4",
     "moment": "^2.19.4",
     "ngx-page-scroll": "^4.0.2",
-    "npm": "^6.0.1",
+    "npm": "^6.13.4",
     "rxjs": "^6.3.3",
     "typed-graphql": "^1.0.2",
     "typescript": "3.1.4",
